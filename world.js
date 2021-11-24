@@ -4,14 +4,14 @@ import { PointerLockControls } from "https://threejs.org/examples/jsm/controls/P
 
 var keyboard = [];
 var objects = [];
-var player = { height:1.6, speed:0.2, turnSpeed:Math.PI*0.003 };
+var player = { height:1.7, speed:0.2, turnSpeed:Math.PI*0.003 };
 var scene, camera, renderer;
 let raycaster, controls, collided, collisionDirection;
 
 
 init();
 addLight();
-scene.add(new THREE.GridHelper(100,30));
+//scene.add(new THREE.GridHelper(250,50));
 
 var wallMat = new THREE.MeshLambertMaterial({
   color: "white",
@@ -19,19 +19,54 @@ var wallMat = new THREE.MeshLambertMaterial({
 });
 
 var boxMat = new THREE.MeshLambertMaterial({
-  color: "red",
+  color: "blue",
   wireframe: false
 });
 
 /*creating walls*/
 //W, H, X, Y, Z , -rot-, -thickness-, -material- 
-createObject(100,10,0,5,30);
-createObject(100,10,0,5,-30);
-createObject(60,10,50,5,0,1);
-createObject(60,10,-50,5,0,1);
+createObject(250,10,0,5,30);
+createObject(250,10,0,5,-30);
+createObject(60,10,125,5,0,1);
+createObject(60,10,-80,5,0,1);
+createObject(60,10,-125,5,0,1);
 
-createObject(34,10,  0,5,0,  1,1, boxMat);
-createObject(40,10, -20,5,17,  0,1, boxMat);
+//wall1
+createObject(40,10, -50,5,17,  0,1, boxMat);
+//wall2
+createObject(34,10,  -30,5,0.5,  1,1, boxMat);
+//wall3
+createObject(40,10, -9.5,5,-16,  0,1, boxMat);
+//wall4
+createObject(34,10,  10,5,0.5,  1,1, boxMat);
+//wall5
+createObject(40,10, 30,5,17,  0,1, boxMat);
+//wall6
+createObject(34,10,  50,5,0.5,  1,1, boxMat);
+//wall7
+createObject(60,10, 80,5,-16,  0,1, boxMat);
+
+const textureLoader = new THREE.TextureLoader();
+const marbleBaseColor = textureLoader.load("./resources/Textures/marble_0012_base_color_8k.jpg");
+const marbleNormalMap = textureLoader.load("./resources/Textures/marble_0012_normal_8k.jpg");
+const marbleRoughnessMap = textureLoader.load("./resources/Textures/marble_0012_roughness_8k.jpg");
+const marbleAmbientOcculsionMap = textureLoader.load("./resources/Textures/marble_0012_ao_8k.jpg");
+const marbleMetallicMap = textureLoader.load("./resources/Textures/gray-granite-flecks-Metallic.png");
+
+let groundMat = new THREE.MeshStandardMaterial(
+  {
+    map: marbleBaseColor,
+    normalMap: marbleNormalMap,
+   // displacementMap: disMap,
+   // displacementScale: 0.1,
+    roughnessMap: marbleRoughnessMap,
+    roughness: 0.5,
+    aoMap: marbleAmbientOcculsionMap,
+    metalnessMap: marbleMetallicMap,
+    metalness: 0.5
+});
+
+createObject(5,5, -50,2,0,  0,5, groundMat);
 
 
 onWindowResize();
@@ -42,7 +77,7 @@ animate();
 function init(){
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
-  camera.position.set(0, 60, 0);
+  camera.position.set(-70, player.height, 0);
   //camera.lookAt(new THREE.Vector3(0,player.height,0));
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(innerWidth, innerHeight);
@@ -55,16 +90,28 @@ function init(){
     controls.lock();
   });
 
+
+
+  
   //Create Plane
-  let center = new THREE.Vector3(0,-0.01,0);
-  let planeGeom = new THREE.PlaneBufferGeometry(100, 60);
-  let planeMat = new THREE.MeshBasicMaterial({color: "white", wireframe: false});
-  let plane = new THREE.Mesh(planeGeom, planeMat);
-  plane.position.copy(center);
-  plane.rotation.x=-Math.PI/2;
-  scene.add(plane);
+  let position = new THREE.Vector3(0,0.0,0);
+  let planeGeom = new THREE.PlaneBufferGeometry(250, 60);
 
 
+  let rawMat = new THREE.MeshBasicMaterial({color: "white", wireframe: false});
+
+  let groundMesh = new THREE.Mesh(planeGeom, rawMat);
+  groundMesh.geometry.attributes.uv2 = groundMesh.geometry.attributes.uv;
+  groundMesh.position.copy(position);
+  groundMesh.rotation.x=-Math.PI/2;
+  scene.add(groundMesh);
+/*
+  let center2 = new THREE.Vector3(0,10,0);
+  let plane2 = new THREE.Mesh(planeGeom, planeMat);
+  plane2.position.copy(center2);
+  plane2.rotation.x=-Math.PI/2;
+  scene.add(plane2);
+*/
   raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
   }
 
@@ -72,12 +119,12 @@ function init(){
   /*Adds Different Types of Light*/
   function addLight(){
     let light = new THREE.DirectionalLight(0xFFFFFF, 0.5);
-      light.position.set(-300, 200, 200);
+      light.position.set(-70, 5, 0);
       light.target.position.set(0, 0, 0);
       light.castShadow = true;
       scene.add(light);
     
-      light = new THREE.AmbientLight(0xFFFFFF, 0.6);
+      light = new THREE.AmbientLight(0xFFFFFF, 0.5);
       scene.add(light);
     }
 
@@ -86,7 +133,7 @@ function init(){
 /*Create a wall/box object
 //Takes Width, Height, Cartesian Coordinates and rotated bool and depth (optional)*/
 function createObject(w,h,x,y,z, rot, d, Material){
-  d = d ||0.5;
+  d = d ||0.75;
   Material = Material || wallMat;
   rot = rot || 0;
   var wall = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), Material);
@@ -124,7 +171,7 @@ function animate(){
 function checkCollision(){
     raycaster.ray.origin.copy( controls.getObject().position );
  
-    let collisionRange = 3; //if the mesh gets too close, the camera clips though the object
+    let collisionRange = 4; //if the mesh gets too close, the camera clips though the object
     let nextPosition = controls.getObject().position.clone()
     if(collided==false){
     collisionDirection= controls.getObject().rotation.x;
@@ -159,7 +206,7 @@ function processKeyboard(angle){
   }
   if(keyboard[83]){ // S key
     camera.position.x -= Math.sin(angle) * player.speed;
-    camera.position.x -= Math.cos(angle) * player.speed;
+    camera.position.z -= Math.cos(angle) * player.speed;
     //console.log(camera.rotation.y);
   }
   if(keyboard[65]){ // A key
