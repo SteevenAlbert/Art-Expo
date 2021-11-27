@@ -6,10 +6,12 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/
 
 var keyboard = [];
 var objects = [];
-const player = { height: 1.7, speed: 0.2, turnSpeed: Math.PI * 0.003 };
+const player = { height: 1.7, speed: 0.2, turnSpeed: Math.PI * 0.009 };
 var scene, camera, renderer;
 let raycaster, controls, collided, collisionDirection, Dlight;
 let groundMat, wallMat, boxMat; //Textures
+let factorX, factorZ, object;
+let faceAngle;
 
 LoadTextures();
 init();
@@ -18,31 +20,30 @@ addLight();
 
 //scene.add(new THREE.GridHelper(250,50));
 /*creating walls*/
-//W, H, X, Y, Z , -rot-, -thickness-, -material- 
+//W, H, D,    X, Y, Z ,    -rot-, -material- 
 /*Outer Walls*/
-createObject(250, 10, 0, 5, 30);
-createObject(250, 10, 0, 5, -30);
-createObject(60, 10, 125, 5, 0, 1);
-createObject(60, 10, -80, 5, 0, 1);
-createObject(60, 10, -125, 5, 0, 1);
+createObject(250, 10, 10,   0, 5, 30);
+createObject(250, 10, 10,  0, 5, -30);
+createObject(60, 10, 6,   125, 5, 0,1 );
+createObject(60, 10, 6,  -80, 5, 0, 1);
+createObject(60, 10, 6,  -125, 5, 0, 1);
 
 //wall1
-createObject(40, 10, -50, 5, 17, 0, 1);
+createObject(40, 10,6, -50, 5, 14.5, 0);
 //wall2
-createObject(34, 10, -30, 5, 0.5, 1, 1);
+createObject(34, 10,6,  -30, 5, 0.5, 1);
 //wall3
-createObject(40, 10, -9.5, 5, -16, 0, 1);
+createObject(40, 10, 6,  -9.5, 5, -13.5, 0);
 //wall4
-createObject(34, 10, 10, 5, 0.5, 1, 1, wallMat);
+createObject(34, 10,6,  10, 5, 0.5, 1, wallMat);
 //wall5
-createObject(40, 10, 30, 5, 17, 0, 1, wallMat);
+createObject(40, 10,6,  30, 5, 14.5, 0, wallMat);
 //wall6
-createObject(34, 10, 50, 5, 0.5, 1, 1, wallMat);
+createObject(34, 10,6,  50, 5, 0.5, 1, wallMat);
 //wall7
-createObject(60, 10, 80, 5, -16, 0, 1, wallMat);
+createObject(60, 10,6,  80, 5, -13.5, 0, wallMat);
 
-createObject(5, 5, -50, 2, 0, 0, 5, groundMat);
-
+createObject(5, 5,1,    -50, 2, 0, 0, groundMat);
 
 /*
 const loader = new GLTFLoader();
@@ -96,7 +97,7 @@ function init() {
   scene.add(groundMesh);
   //Create Ceiling
   let center2 = new THREE.Vector3(0, 10, 0);
-  let plane2 = new THREE.Mesh(planeGeom, boxMat);
+  let plane2 = new THREE.Mesh(planeGeom, wallMat);
   plane2.position.copy(center2);
   plane2.rotation.x = Math.PI / 2;
 
@@ -211,8 +212,8 @@ function addLight() {
 
 
 /*Create a wall/box object
-//Takes Width, Height, Cartesian Coordinates and rotated bool and depth (optional)*/
-function createObject(w, h, x, y, z, rot, d, Material) {
+//Takes Width, Height, depth and Cartesian Coordinates (rotated bool and material optional)*/
+function createObject(w, h, d, x, y, z, rot, Material) {
   d = d || 0.75;
   Material = Material || wallMat;
   rot = rot || 0;
@@ -236,19 +237,20 @@ function animate() {
   let angle = Math.atan2(vec.x, vec.z);
 //  Dlight.position.set(angle, 8, angle);
 //  Dlight.target.position.set(angle, 8, angle);
-  console.log(angle);
+ 
   if (controls.isLocked === true) {
-    checkCollision();
+    checkCollision(angle);
   }
   processKeyboard(angle);
   renderer.render(scene, camera);
 }
 
 
-function checkCollision() {
+function checkCollision(angle) {
   raycaster.ray.origin.copy(controls.getObject().position);
-
-  let collisionRange = 4; //if the mesh gets too close, the camera clips though the object
+  factorX=1;
+  factorZ=1;
+  let collisionRange = 3; //if the mesh gets too close, the camera clips though the object
   let nextPosition = controls.getObject().position.clone()
   if (collided == false) {
     collisionDirection = controls.getObject().rotation.x;
@@ -258,15 +260,30 @@ function checkCollision() {
   let playerPOV = controls.getObject().rotation.x;
 
   for (let i = 0; i < objects.length; i++) {
-    let object = objects[i];
+    object = objects[i];
     let objectDirection = object.position.clone().sub(playerPosition).normalize();
-    
+  
     raycaster.set(nextPosition, objectDirection) //set the position and direction
     let directionIntersects = raycaster.intersectObject(object);
-
+   
+   
     if (directionIntersects.length > 0 && directionIntersects[0].distance < collisionRange) {
       collided = true;
-      console.log(directionIntersects[0]);
+
+      if(directionIntersects[0].faceIndex == 2 || directionIntersects[0].faceIndex == 3){
+        faceAngle = object.rotation.y;
+      }
+      if(directionIntersects[0].faceIndex == 8 || directionIntersects[0].faceIndex == 9){
+        faceAngle = object.rotation.y + Math.PI/2;
+      }
+      if(directionIntersects[0].faceIndex == 0 || directionIntersects[0].faceIndex == 1){
+        faceAngle = object.rotation.y + Math.PI;
+      }
+      if(directionIntersects[0].faceIndex == 10 || directionIntersects[0].faceIndex == 11){
+        faceAngle = object.rotation.y + 3*Math.PI/2;
+      }
+     
+      console.log(directionIntersects[0].faceIndex);
       break;
     }
   }
@@ -275,28 +292,57 @@ function checkCollision() {
 
 /*Process Keyboard Input and apply changes accordingly*/
 function processKeyboard(angle) {
-  if (keyboard[87] && collided == false) { // W key
-    camera.position.x += Math.sin(angle) * player.speed;
-    camera.position.z += Math.cos(angle) * player.speed;
-    //camera.position.z -= Math.cos(camera.rotation.y) * player.speed;
-   // console.log(controls.position.z);
+  var newX, newZ;
+  var runFactor=1;
+  if(!collided){
+    if(keyboard[16]){
+      runFactor=1.7;
+    }
+  if (keyboard[87]) { // W key
+    camera.position.x += Math.sin(angle) * player.speed * runFactor;
+    camera.position.z += Math.cos(angle) * player.speed * runFactor;
   }
-  if (keyboard[83] && collided == false) { // S key
-    camera.position.x -= Math.sin(angle) * player.speed;
-    camera.position.z -= Math.cos(angle) * player.speed;
-    //console.log(camera.rotation.y);
+  if (keyboard[83]) { // S key
+    camera.position.x -= Math.sin(angle) * player.speed* runFactor;
+    camera.position.z -= Math.cos(angle) * player.speed* runFactor;
   }
   if (keyboard[65]) { // A key
-    camera.position.x += Math.cos(angle) * player.speed;
-    camera.position.z += -Math.sin(angle) * player.speed;
+    camera.position.x += Math.cos(angle) * player.speed* runFactor;
+    camera.position.z += -Math.sin(angle) * player.speed* runFactor;
   }
   if (keyboard[68]) { // D key
-    camera.position.x -= Math.sin(angle + Math.PI / 2) * player.speed;
-    camera.position.z += -Math.cos(angle + Math.PI / 2) * player.speed;
+    camera.position.x -= Math.sin(angle + Math.PI / 2) * player.speed* runFactor;
+    camera.position.z += -Math.cos(angle + Math.PI / 2) * player.speed* runFactor;
   }
+}
 
+  if(collided){
+    if(keyboard[87]){
+      newX = Math.sin(angle) * player.speed;
+      newZ = Math.cos(angle) * player.speed;
+      calcAlphaBeta(newX, newZ);
+     }
+    if (keyboard[83]) { // S key
+      newX = -1*Math.sin(angle) * player.speed;
+      newZ = -1*Math.cos(angle) * player.speed;
+      calcAlphaBeta(newX,newZ);
+    }
+    if (keyboard[65]) { // A key
+      newX = Math.cos(angle) * player.speed; 
+      newZ = -Math.sin(angle) * player.speed;
+      calcAlphaBeta(newX,newZ);
+    }
+    if (keyboard[68]) { // D key
+      newX = -Math.sin(angle + Math.PI / 2) * player.speed;
+      newZ = -Math.cos(angle + Math.PI / 2) * player.speed;
+      calcAlphaBeta(newX,newZ);
+    }
 
+  
+  }
+  
   function keyDown(event) {
+    //console.log(event);
     keyboard[event.keyCode] = true;
   }
   function keyUp(event) {
@@ -305,13 +351,29 @@ function processKeyboard(angle) {
   window.addEventListener('keydown', keyDown);
   window.addEventListener('keyup', keyUp);
 
-  /*if(keyboard[37]){ // left arrow key
-    camera.rotation.y += player.turnSpeed;
+  if(keyboard[37]){ // left arrow key
+    camera.rotation.x += player.turnSpeed;
   }
   if(keyboard[39]){ // right arrow key
-    camera.rotation.y -= player.turnSpeed;
-  }*/
+    camera.rotation.x -= player.turnSpeed;
+  }
 }
+
+
+function calcAlphaBeta(newX, newZ){
+  var alpha = newZ*Math.cos(faceAngle)+newX*Math.sin(faceAngle);
+      var beta1 = newZ*Math.sin(faceAngle);
+      var beta2 = newX*Math.cos(faceAngle);
+      if(beta2>0){
+        beta2=0;
+      }
+      if(beta1<0){
+        beta1=0;
+      }
+      camera.position.x+=alpha * Math.sin(faceAngle) + (beta2-beta1)*Math.cos(faceAngle);
+      camera.position.z+=alpha * Math.cos(faceAngle) - (beta2-beta1)*Math.sin(faceAngle);
+}
+
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
