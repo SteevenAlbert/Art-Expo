@@ -79,7 +79,7 @@ function checkCollision(angle, raycaster, objects, controls) {
       if(keyboard[87]){
         newX = Math.sin(angle) * player.speed;
         newZ = Math.cos(angle) * player.speed;
-        camera=calcAlphaBeta(newX, newZ, camera);
+        calcAlphaBeta(newX, newZ, camera);
        }
       if (keyboard[83]) { // S key
         newX = -1*Math.sin(angle) * player.speed;

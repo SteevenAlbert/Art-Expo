@@ -30,6 +30,7 @@ animate();
 function init() {
   //Standard Initalization
   scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x11111f, 0.02);
   camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
   camera.position.set(-70, player.height, 0);
   //camera.lookAt(new THREE.Vector3(0,player.height,0));
