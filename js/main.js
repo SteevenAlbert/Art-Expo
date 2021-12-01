@@ -5,6 +5,7 @@ import { PointerLockControls } from "https://threejs.org/examples/jsm/controls/P
 
 import { addModels } from './models.js';
 import { addLights } from './lights.js';
+import { loadMainTheme } from './audio.js';
 import { checkCollision, processKeyboard } from './movement.js';
 import {createWorld, LoadTextures} from './world.js';
 
@@ -21,6 +22,7 @@ init();
 addLights(scene);
 addModels(scene);
 createWorld(scene, objects);
+
 onWindowResize();
 animate();
 
@@ -44,6 +46,7 @@ function init() {
   let btn1 = document.querySelector('#button1');
   btn1.addEventListener('click', () => {
     controls.lock();
+    loadMainTheme();
   });
 
   
@@ -58,8 +61,8 @@ function animate() {
   requestAnimationFrame(animate);
 
   let vec = new THREE.Vector3();
-
   camera.getWorldDirection(vec);
+  
   let angle = Math.atan2(vec.x, vec.z);
  
   if (controls.isLocked === true) {

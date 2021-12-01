@@ -12,26 +12,27 @@ function createWorld(scene, objects){
     /*Outer Walls*/
     createObject(250, 10, 10,   0, 5, 30);
     createObject(250, 10, 10,  0, 5, -30);
-    createObject(60, 10, 6,   125, 5, 0,1 );
-    createObject(60, 10, 6,  -80, 5, 0, 1);
-    createObject(60, 10, 6,  -125, 5, 0, 1);
+    createObject(60, 10, 6,   125, 5, 0,-Math.PI / 2 );
+    createObject(60, 10, 6,  -80, 5, 0, -Math.PI / 2);
+    createObject(60, 10, 6,  -125, 5, 0,  -Math.PI / 2);
 
     //wall1
-    createObject(40, 10,6, -50, 5, 14.5, 0);
+    createObject(40, 10,3, -50, 5, 16, 0);
+  //  createObject(3, 10,3, -33, 5, 15, 0, -Math.PI / 2);
     //wall2
-    createObject(34, 10,6,  -30, 5, 0.5, 1);
+    createObject(34, 10,3,  -30, 5, 0.5, -Math.PI / 2);
     //wall3
-    createObject(40, 10, 6,  -9.5, 5, -13.5, 0);
+    createObject(40, 10, 3,  -9.5, 5, -15, 0);
     //wall4
-    createObject(34, 10,6,  10, 5, 0.5, 1, wallMat);
+    createObject(34, 10,3,  10, 5, 0.5, -Math.PI / 2, wallMat);
     //wall5
-    createObject(40, 10,6,  30, 5, 14.5, 0, wallMat);
+    createObject(40, 10,3,  30, 5, 16, 0, wallMat);
     //wall6
-    createObject(34, 10,6,  50, 5, 0.5, 1, wallMat);
+    createObject(34, 10,3,  50, 5, 0.5, -Math.PI / 2, wallMat);
     //wall7
-    createObject(60, 10,6,  80, 5, -13.5, 0, wallMat);
+    createObject(60, 10,3,  80, 5, -15, 0, wallMat);
 
-    createObject(5, 5,1,    -50, 2, 0, 0, groundMat);
+    createObject(5, 5,3,    -50, 2, 0, 0, groundMat);
 
 
     //Create Ground
@@ -58,7 +59,7 @@ function LoadTextures() {
     const textureLoader = new THREE.TextureLoader();
     textureLoader.wrapS = textureLoader.wrapT = THREE.RepeatWrapping;
     //textureLoader.repeat.set( 10, 10 );
-  
+ 
     const marbleBaseColor = textureLoader.load("./resources/Textures/marble_0012_base_color_8k.jpg", function(marbleBaseColor){
       marbleBaseColor.wrapS = marbleBaseColor.wrapT = THREE.RepeatWrapping;
       marbleBaseColor.offset.set( 0, 0 );
@@ -128,7 +129,7 @@ function LoadTextures() {
     });
   
     let boxMat = new THREE.MeshPhongMaterial({
-      color: "white",
+      color: "black",
       wireframe: false,
       shininess: 30,
     });
@@ -144,9 +145,9 @@ function createObject(w, h, d, x, y, z, rot, Material) {
     rot = rot || 0;
   
     var wall = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), Material);
-    if (rot > 0) {
-      wall.rotation.y = -Math.PI / 2;
-    }
+    
+      wall.rotation.y =rot;
+    
     wall.position.copy(new THREE.Vector3(x, y, z));
     worldScene.add(wall);
     worldObjects.push(wall);

@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 // var spotLightHelper;
 /*Adds Different Types of Light*/
-function addLights(scene) {
+function addLights(scene, flash) {
   
     addSpotlight(-60, 8, 8, -60, 2, 14.5, scene);
     addSpotlight(-50, 8, 8, -50, 2, 14.5, scene);
@@ -9,6 +9,7 @@ function addLights(scene) {
     
     let ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.9);
     scene.add(ambientLight);
+
   }
   
   

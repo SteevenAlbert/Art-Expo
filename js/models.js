@@ -15,7 +15,7 @@ gltfLoader.load(
     function ( gltf ) {
 
     mesh = gltf.scene.children[0];
-    mesh.position.set(-60, 4, 11.5);
+    mesh.position.set(-60, 4, 14.5);
     mesh.rotation.set(1.5*Math.PI, 0, 0);
     mesh.scale.set(3,3,3);
 
@@ -38,7 +38,7 @@ gltfLoader.load(
     function ( gltf ) {
 
     mesh = gltf.scene.children[0];
-    mesh.position.set(-60, 10, 11.2);
+    mesh.position.set(-60, 10, 14.2);
     mesh.scale.set(0.005,0.005,0.005);
     //mesh.rotation.set(-Math.PI/2+0.2, 0, Math.PI/2);
 
@@ -61,7 +61,7 @@ gltfLoader.load(
     function ( gltf ) {
 
     mesh = gltf.scene.children[0];
-    mesh.position.set(-50, 10, 11.2);
+    mesh.position.set(-50, 10, 14.2);
     mesh.scale.set(0.005,0.005,0.005);
     //mesh.rotation.set(-Math.PI/2+0.2, 0, Math.PI/2);
 
@@ -85,7 +85,7 @@ gltfLoader.load(
     function ( gltf ) {
 
     mesh = gltf.scene.children[0];
-    mesh.position.set(-40, 10, 11.2);
+    mesh.position.set(-40, 10, 14.2);
     mesh.scale.set(0.005,0.005,0.005);
     //mesh.rotation.set(-Math.PI/2+0.2, 0, Math.PI/2);
 
