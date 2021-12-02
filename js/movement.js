@@ -16,7 +16,7 @@ function checkCollision(angle, raycaster, objects, controls) {
       let objectDirection = object.position.clone().sub(playerPosition).normalize();
       raycaster.set(playerPosition, objectDirection) //set the position and direction
 
-      let objectsIntersected = raycaster.intersectObjects(objects);
+      let objectsIntersected = raycaster.intersectObject(object);
      
       if (objectsIntersected.length > 0 && objectsIntersected[0].distance < collisionRange) {
         collided = true;
