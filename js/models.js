@@ -18,15 +18,7 @@ gltfLoader.load(
     mesh.position.set(-60, 4, 14.5);
     mesh.rotation.set(1.5*Math.PI, 0, 0);
     mesh.scale.set(3,3,3);
-
-        scene.add( gltf.scene );
-
-        gltf.animations; // Array<THREE.AnimationClip>
-        gltf.scene; // THREE.Group
-        gltf.scenes; // Array<THREE.Group>
-        gltf.cameras; // Array<THREE.Camera>
-        gltf.asset; // Object
-
+    scene.add( gltf.scene );
     }
 );
 
@@ -40,16 +32,7 @@ gltfLoader.load(
     mesh = gltf.scene.children[0];
     mesh.position.set(-60, 10, 14.2);
     mesh.scale.set(0.005,0.005,0.005);
-    //mesh.rotation.set(-Math.PI/2+0.2, 0, Math.PI/2);
-
-        scene.add( gltf.scene );
-
-        gltf.animations; // Array<THREE.AnimationClip>
-        gltf.scene; // THREE.Group
-        gltf.scenes; // Array<THREE.Group>
-        gltf.cameras; // Array<THREE.Camera>
-        gltf.asset; // Object
-
+    scene.add( gltf.scene );
     }
 );
 
@@ -63,16 +46,7 @@ gltfLoader.load(
     mesh = gltf.scene.children[0];
     mesh.position.set(-50, 10, 14.2);
     mesh.scale.set(0.005,0.005,0.005);
-    //mesh.rotation.set(-Math.PI/2+0.2, 0, Math.PI/2);
-
-        scene.add( gltf.scene );
-
-        gltf.animations; // Array<THREE.AnimationClip>
-        gltf.scene; // THREE.Group
-        gltf.scenes; // Array<THREE.Group>
-        gltf.cameras; // Array<THREE.Camera>
-        gltf.asset; // Object
-
+    scene.add( gltf.scene );
     }
 );
 
@@ -87,16 +61,7 @@ gltfLoader.load(
     mesh = gltf.scene.children[0];
     mesh.position.set(-40, 10, 14.2);
     mesh.scale.set(0.005,0.005,0.005);
-    //mesh.rotation.set(-Math.PI/2+0.2, 0, Math.PI/2);
-
-        scene.add( gltf.scene );
-
-        gltf.animations; // Array<THREE.AnimationClip>
-        gltf.scene; // THREE.Group
-        gltf.scenes; // Array<THREE.Group>
-        gltf.cameras; // Array<THREE.Camera>
-        gltf.asset; // Object
-
+    scene.add( gltf.scene );
     }
 );
 

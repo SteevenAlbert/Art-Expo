@@ -3,56 +3,100 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module
 var worldScene, worldObjects;
 let groundMat, wallMat, boxMat; //Textures
 
+
 function createWorld(scene, objects){
-    worldScene = scene;
-    worldObjects = objects;
-    //scene.add(new THREE.GridHelper(250,50));
-    /*creating walls*/
-    //W, H, D,    X, Y, Z ,    -rot-, -material- 
-    /*Outer Walls*/
-    createObject(250, 10, 10,   0, 5, 30);
-    createObject(250, 10, 10,  0, 5, -30);
-    createObject(60, 10, 6,   125, 5, 0,-Math.PI / 2 );
-    createObject(60, 10, 6,  -80, 5, 0, -Math.PI / 2);
-    createObject(60, 10, 6,  -125, 5, 0,  -Math.PI / 2);
+  worldScene = scene;
+  worldObjects = objects;
 
-    //wall1
-    createObject(40, 10,3, -50, 5, 16, 0);
-  //  createObject(3, 10,3, -33, 5, 15, 0, -Math.PI / 2);
-    //wall2
-    createObject(34, 10,3,  -30, 5, 0.5, -Math.PI / 2);
-    //wall3
-    createObject(40, 10, 3,  -9.5, 5, -15, 0);
-    //wall4
-    createObject(34, 10,3,  10, 5, 0.5, -Math.PI / 2, wallMat);
-    //wall5
-    createObject(40, 10,3,  30, 5, 16, 0, wallMat);
-    //wall6
-    createObject(34, 10,3,  50, 5, 0.5, -Math.PI / 2, wallMat);
-    //wall7
-    createObject(60, 10,3,  80, 5, -15, 0, wallMat);
-
-    createObject(5, 5,3,    -50, 2, 0, 0, groundMat);
-
-
-    //Create Ground
-    let position = new THREE.Vector3(0, 0.0, 0);
-    let planeGeom = new THREE.PlaneBufferGeometry(250, 60);
-    let groundMesh = new THREE.Mesh(planeGeom, groundMat);
-    groundMesh.geometry.attributes.uv2 = groundMesh.geometry.attributes.uv;
-    groundMesh.position.copy(position);
-    groundMesh.rotation.x = -Math.PI / 2;
-    scene.add(groundMesh);
-    //Create Ceiling
-    let center2 = new THREE.Vector3(0, 10, 0);
-    let plane2 = new THREE.Mesh(planeGeom, wallMat);
-    plane2.position.copy(center2);
-    plane2.rotation.x = Math.PI / 2;
+  // Skybox
+  createEnvironment();
   
+  //scene.add(new THREE.GridHelper(250,50));
+  /*creating walls*/
+  //W, H, D,    X, Y, Z ,    -rot-, -material- 
+  /*Outer Walls*/
+  createObject(250, 10, 10,   0, 5, 30);
+  createObject(250, 10, 10,  0, 5, -30);
+  createObject(60, 10, 6,   125, 5, 0,-Math.PI / 2 );
+  createObject(60, 10, 6,  -80, 5, 0, -Math.PI / 2);
+  createObject(60, 3, 6,  -125, 0, 0,  -Math.PI / 2);
 
+  //wall1
+  createObject(40, 10,3, -50, 5, 16, 0);
+//  createObject(3, 10,3, -33, 5, 15, 0, -Math.PI / 2);
+  //wall2
+  createObject(34, 10,3,  -30, 5, 0.5, -Math.PI / 2);
+  //wall3
+  createObject(40, 10, 3,  -9.5, 5, -15, 0);
+  //wall4
+  createObject(34, 10,3,  10, 5, 0.5, -Math.PI / 2, wallMat);
+  //wall5
+  createObject(40, 10,3,  30, 5, 16, 0, wallMat);
+  //wall6
+  createObject(34, 10,3,  50, 5, 0.5, -Math.PI / 2, wallMat);
+  //wall7
+  createObject(60, 10,3,  80, 5, -15, 0, wallMat);
+
+  createObject(5, 5,3,    -50, 2, 0, 0, groundMat);
+
+
+  //Create Ground
+  let position = new THREE.Vector3(0, 0.0, 0);
+  let planeGeom = new THREE.PlaneBufferGeometry(250, 60);
+  let groundMesh = new THREE.Mesh(planeGeom, groundMat);
+  groundMesh.geometry.attributes.uv2 = groundMesh.geometry.attributes.uv;
+  groundMesh.position.copy(position);
+  groundMesh.rotation.x = -Math.PI / 2;
+  scene.add(groundMesh);
+
+  //Create Ceiling
+  let center2 = new THREE.Vector3(22.5, 10, 0);
+  let planeGeom2 = new THREE.PlaneBufferGeometry(205, 60);
+  let plane2 = new THREE.Mesh(planeGeom2, wallMat);
+  plane2.position.copy(center2);
+  plane2.rotation.x = Math.PI / 2;
   scene.add(plane2);
 }
 
+
+function createEnvironment()
+{
+  // METHOD 1
+  worldScene.background = new THREE.CubeTextureLoader()
+  .setPath('./resources/Environment/')
+  .load(
+    ['px.png',
+    'nx.png',
+    'py.png',
+    'ny.png',
+    'pz.png',
+    'nz.png',
+  ]);
+
+  // METHOD 2
+  // let materialArray = [];
+  // let texture_ft = new THREE.TextureLoader().load( './resources/Environment/nx.png');
+  // let texture_bk = new THREE.TextureLoader().load( './resources/Environment/px.png');
+  // let texture_up = new THREE.TextureLoader().load( './resources/Environment/py.png');
+  // let texture_dn = new THREE.TextureLoader().load( './resources/Environment/ny.png');
+  // let texture_rt = new THREE.TextureLoader().load( './resources/Environment/nz.png');
+  // let texture_lf = new THREE.TextureLoader().load( './resources/Environment/pz.png');
+    
+  // materialArray.push(new THREE.MeshBasicMaterial( { map: texture_ft }));
+  // materialArray.push(new THREE.MeshBasicMaterial( { map: texture_bk }));
+  // materialArray.push(new THREE.MeshBasicMaterial( { map: texture_up }));
+  // materialArray.push(new THREE.MeshBasicMaterial( { map: texture_dn }));
+  // materialArray.push(new THREE.MeshBasicMaterial( { map: texture_rt }));
+  // materialArray.push(new THREE.MeshBasicMaterial( { map: texture_lf }));
+    
+  // for (let i = 0; i < 6; i++)
+  //   materialArray[i].side = THREE.BackSide;
+    
+  // let skyboxGeo = new THREE.BoxGeometry( 2000, 2000, 2000);
+  // let skybox = new THREE.Mesh( skyboxGeo, materialArray );
+  // worldScene.add( skybox ); 
+
+}
 
 
 function LoadTextures() {
