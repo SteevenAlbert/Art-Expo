@@ -46,7 +46,7 @@ function checkCollision(angle, raycaster, objects, controls) {
   
   /*Process Keyboard Input and apply changes accordingly*/
   function processKeyboard(angle, camera, player) {
-    var newX, newZ;
+    var deltaX, deltaZ;
     var runFactor=1;
     if(!collided){
       if(keyboard[16]){
@@ -72,24 +72,24 @@ function checkCollision(angle, raycaster, objects, controls) {
   
     if(collided){
       if(keyboard[87]){
-        newX = Math.sin(angle) * player.speed;
-        newZ = Math.cos(angle) * player.speed;
-        calcAlphaBeta(newX, newZ, camera);
+        deltaX = Math.sin(angle) * player.speed;
+        deltaZ = Math.cos(angle) * player.speed;
+        calcAlphaBeta(deltaX, deltaZ, camera);
        }
       if (keyboard[83]) { // S key
-        newX = -Math.sin(angle) * player.speed;
-        newZ = -Math.cos(angle) * player.speed;
-        calcAlphaBeta(newX,newZ, camera);
+        deltaX = -Math.sin(angle) * player.speed;
+        deltaZ = -Math.cos(angle) * player.speed;
+        calcAlphaBeta(deltaX,deltaZ, camera);
       }
       if (keyboard[65]) { // A key
-        newX = Math.cos(angle) * player.speed; 
-        newZ = -Math.sin(angle) * player.speed;
-        calcAlphaBeta(newX,newZ, camera);
+        deltaX = Math.cos(angle) * player.speed; 
+        deltaZ = -Math.sin(angle) * player.speed;
+        calcAlphaBeta(deltaX,deltaZ, camera);
       }
       if (keyboard[68]) { // D key
-        newX = -Math.sin(angle + Math.PI / 2) * player.speed;
-        newZ = -Math.cos(angle + Math.PI / 2) * player.speed;
-        calcAlphaBeta(newX,newZ, camera);
+        deltaX = -Math.sin(angle + Math.PI / 2) * player.speed;
+        deltaZ = -Math.cos(angle + Math.PI / 2) * player.speed;
+        calcAlphaBeta(deltaX,deltaZ, camera);
       }
     }
     
@@ -112,18 +112,18 @@ function checkCollision(angle, raycaster, objects, controls) {
   }
   
   
-  function calcAlphaBeta(newX, newZ, camera){
-        var alpha = newZ*Math.cos(faceAngle)+newX*Math.sin(faceAngle);
-        var beta1 = newZ*Math.sin(faceAngle);
-        var beta2 = newX*Math.cos(faceAngle);
-        if(beta2>0){
-          beta2=0;
-        }
-        if(beta1<0){
-          beta1=0;
-        }
-        camera.position.x+=alpha * Math.sin(faceAngle) + (beta2-beta1)*Math.cos(faceAngle);
-        camera.position.z+=alpha * Math.cos(faceAngle) - (beta2-beta1)*Math.sin(faceAngle);
-  }
+  
+  function calcAlphaBeta(deltaX, deltaZ, camera){
+    var alpha = deltaZ * Math.cos(faceAngle) + deltaX * Math.sin(faceAngle);
+    var beta = deltaX * Math.cos(faceAngle) - deltaZ * Math.sin(faceAngle);
+    
+    if(beta > 0) //You're moving towards the wall if beta is positive
+    {
+      beta = 0;
+    }
+    
+    camera.position.x += alpha * Math.sin(faceAngle) + beta * Math.cos(faceAngle);
+    camera.position.z += alpha * Math.cos(faceAngle) - beta * Math.sin(faceAngle);
+}
 
   export {checkCollision, processKeyboard};
