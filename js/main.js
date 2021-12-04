@@ -8,6 +8,7 @@ import { addLights } from './lights.js';
 import { loadMainTheme } from './audio.js';
 import { checkCollision, processKeyboard } from './movement.js';
 import {createWorld, LoadTextures} from './world.js';
+import { addText } from './text.js';
 
 
 var controls, raycaster;
@@ -21,6 +22,7 @@ LoadTextures();
 init();
 addLights(scene);
 addModels(scene);
+addText(scene);
 createWorld(scene, objects);
 
 onWindowResize();

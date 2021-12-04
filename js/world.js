@@ -37,7 +37,7 @@ function createWorld(scene, objects){
   //wall7
   createObject(60, 10,3,  80, 5, -15, 0, wallMat);
 
-  createObject(5, 5,3,    -50, 2, 0, 0, groundMat);
+  //createObject(5, 5,3,    -50, 2, 0, 0, groundMat);
 
 
   //Create Ground
