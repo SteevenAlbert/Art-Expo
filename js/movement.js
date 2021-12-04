@@ -11,7 +11,7 @@ function checkCollision(angle, raycaster, objects, controls) {
     //let nextPosition = controls.getObject().position.clone()
     let playerPosition = controls.getObject().position;
 
-    for (let i = 0; i < objects.length-1; i++) {
+    for (let i = 0; i < objects.length; i++) {
       object = objects[i];
       let objectDirection = object.position.clone().sub(playerPosition).normalize();
       raycaster.set(playerPosition, objectDirection) //set the position and direction
