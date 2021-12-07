@@ -38,8 +38,11 @@ function init() {
   camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
   camera.position.set(-70, player.height, 0);
   //camera.lookAt(new THREE.Vector3(0,player.height,0));
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer({
+    antialias: true
+  });
   renderer.setSize(innerWidth, innerHeight);
+  //renderer.setPixelRatio(window.devicePixelRatio);
   document.body.appendChild(renderer.domElement);
 
   //Set Controls
@@ -81,6 +84,7 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  //renderer.setPixelRatio(window.devicePixelRatio);
 }
 
 window.addEventListener('resize', onWindowResize);
