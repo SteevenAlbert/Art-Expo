@@ -332,4 +332,33 @@ function LoadTextures() {
       worldScene.add(worldObjects[index]);
     }
 
-  export {createWorld, LoadTextures};
+
+  function drawCrosshair(camera){
+    var x = 0.003, y = 0.003;
+    const material = new THREE.LineBasicMaterial({
+      color: 0xffffff,
+      linewidth: 100,
+      linecap: 'round',
+      linejoin:  'round'
+    });
+    
+    const points=[];
+    points.push(new THREE.Vector3(0, y, 0));
+    points.push(new THREE.Vector3(0, -y, 0));
+    points.push(new THREE.Vector3(0, 0, 0));
+    points.push(new THREE.Vector3(x, 0, 0));    
+    points.push(new THREE.Vector3(-x, 0, 0));
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+    
+    const crosshair = new THREE.Line( geometry, material );
+    var crosshairPercentX = 50;
+    var crosshairPercentY = 50;
+    var crosshairPositionX = (crosshairPercentX / 100) * 2 - 1;
+    var crosshairPositionY = (crosshairPercentY / 100) * 2 - 1;
+    
+    crosshair.position.x = crosshairPositionX * camera.aspect;
+    crosshair.position.y = crosshairPositionY;
+    crosshair.position.z = -0.3;
+    camera.add( crosshair );
+  }
+  export {createWorld, LoadTextures, drawCrosshair};
