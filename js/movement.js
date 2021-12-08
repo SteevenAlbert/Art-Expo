@@ -14,7 +14,7 @@ function checkCollision(angle, raycaster, objects, controls,scene) {
       let objectDirection = object.position.clone().sub(playerPosition).normalize();
       raycaster.set(playerPosition, objectDirection) //set the position and direction
       
-      let objectIntersected = raycaster.intersectObject(object);
+      let objectIntersected = raycaster.intersectObject(object, true);
  
       if (objectIntersected.length > 0 && objectIntersected[0].distance < collisionRange) {
         collided = true;
@@ -23,7 +23,7 @@ function checkCollision(angle, raycaster, objects, controls,scene) {
         if(objectIntersected[0].faceIndex == 2 || objectIntersected[0].faceIndex == 3){
           faceAngle = object.rotation.y;
         }
-        if(objectIntersected[0].faceIndex == 8 || objectIntersected[0].faceIndex == 9 || objectIntersected[0].faceIndex == 22  || objectIntersected[0].faceIndex == 24){
+        if(objectIntersected[0].faceIndex == 8 || objectIntersected[0].faceIndex == 9 || objectIntersected[0].faceIndex == 22  || objectIntersected[0].faceIndex == 24 || objectIntersected[0].faceIndex == 21){
           faceAngle = object.rotation.y + Math.PI/2;
         }
         if(objectIntersected[0].faceIndex == 0 || objectIntersected[0].faceIndex == 1 ){
