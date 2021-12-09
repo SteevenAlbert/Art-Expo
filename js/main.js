@@ -16,7 +16,8 @@ var interactables = [];
 const player = { height: 1.7, speed: 0.2, turnSpeed: Math.PI * 0.009 };
 var scene, camera, renderer;
 var color= "0xff0000";
-
+var moveToObject=false;
+var intersectedPoint;
 
 LoadTextures();
 init();
@@ -91,6 +92,15 @@ function animate() {
   }
   processKeyboard(angle, camera, player);
 
+  if(moveToObject){
+  let newVec= intersectedPoint;
+  camera.position.lerp(newVec,0.1);
+  camera.position.y= player.height;
+ 
+   if(Math.ceil(newVec.x)==Math.ceil(camera.position.x)){
+     moveToObject=false;
+   }
+ }
   //spotLightHelper.update();
   renderer.render(scene, camera);
 }
@@ -105,7 +115,8 @@ function onWindowResize() {
 
 
 function onMouseDown(e){
-  interact(e, raycaster2, interactables, camera);
+  intersectedPoint = interact(e, raycaster2, interactables, camera);
+  moveToObject=true;
 }
 
 window.addEventListener('resize', onWindowResize);
