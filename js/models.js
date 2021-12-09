@@ -15,7 +15,7 @@ gltfLoader.load(
     function ( gltf ) {
 
     mesh = gltf.scene.children[0];
-    mesh.position.set(-62, 4, 15.5);
+    mesh.position.set(-60, 4, 15.5);
     mesh.rotation.set(1.5*Math.PI, 0, 0);
     mesh.scale.set(3,3,3);
     scene.add( gltf.scene );
@@ -38,51 +38,76 @@ gltfLoader.load(
     }
 );
 
-// SPOTLIGHT
-gltfLoader.load(
-    // resource URL
-    './resources/3Dmodels/spotlight/scene.gltf',
-    // called when the resource is loaded
-    function ( gltf ) {
 
-    mesh = gltf.scene.children[0];
-    mesh.position.set(-60, 10, 15.2);
-    mesh.scale.set(0.005,0.005,0.005);
-    scene.add( gltf.scene );
-    interactive.push(gltf.scene);
+// First room right SPOTLIGHTs
+for (let i = -60; i <= -40; i+=10){
+    gltfLoader.load(
+        // resource URL
+        './resources/3Dmodels/spotlight/scene.gltf',
+        // called when the resource is loaded
+        function ( gltf ) {
+
+        mesh = gltf.scene.children[0];
+        mesh.position.set(i, 10, 12);
+        mesh.scale.set(0.005,0.005,0.005);
+        scene.add( gltf.scene );
+        }
+    );
+}
+
+// First room front SPOTLIGHTs
+for (let i = -10; i <= 10; i+=20){
+    gltfLoader.load(
+        // resource URL
+        './resources/3Dmodels/spotlight/scene.gltf',
+        // called when the resource is loaded
+        function ( gltf ) {
+
+        mesh = gltf.scene.children[0];
+        mesh.position.set(-35, 10, i);
+        mesh.scale.set(0.005,0.005,0.005);
+        scene.add( gltf.scene );
+        }
+    );
+}
+
+
+
+// Left hallway LIGHT
+for (let j = -28; j <= -17; j+=11){
+    for (let i = -75; i < 125; i+=20){
+        gltfLoader.load(
+            // resource URL
+            './resources/3Dmodels/light/scene.gltf',
+            // called when the resource is loaded
+            function ( gltf ) {
+
+            mesh = gltf.scene.children[0];
+            mesh.position.set(i, 9.3, j);
+            mesh.scale.set(0.05,0.05,0.05);
+            scene.add( gltf.scene );
+            }
+        );
     }
-);
+}
 
-// SPOTLIGHT
-gltfLoader.load(
-    // resource URL
-    './resources/3Dmodels/spotlight/scene.gltf',
-    // called when the resource is loaded
-    function ( gltf ) {
+// Right hallway LIGHT
+for (let j = 18; j <= 28; j+=10){
+    for (let i = -75; i < 125; i+=20){
+        gltfLoader.load(
+            // resource URL
+            './resources/3Dmodels/light/scene.gltf',
+            // called when the resource is loaded
+            function ( gltf ) {
 
-    mesh = gltf.scene.children[0];
-    mesh.position.set(-50, 10, 15.2);
-    mesh.scale.set(0.005,0.005,0.005);
-    scene.add( gltf.scene );
-    interactive.push(gltf.scene);
+            mesh = gltf.scene.children[0];
+            mesh.position.set(i, 9.3, j);
+            mesh.scale.set(0.05,0.05,0.05);
+            scene.add( gltf.scene );
+            }
+        );
     }
-);
-
-
-// SPOTLIGHT
-gltfLoader.load(
-    // resource URL
-    './resources/3Dmodels/spotlight/scene.gltf',
-    // called when the resource is loaded
-    function ( gltf ) {
-
-    mesh = gltf.scene.children[0];
-    mesh.position.set(-40, 10, 15.2);
-    mesh.scale.set(0.005,0.005,0.005);
-    scene.add( gltf.scene );
-    interactive.push(gltf.scene);
-    }
-);
+}
 
 }
 

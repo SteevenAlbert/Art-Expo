@@ -4,8 +4,8 @@ let object,intersects;
 
 function interact(e, raycaster2, interactables, camera){
   var mouse = new THREE.Vector2();  
-  mouse.x = (e.clientX / window.innerWidth) * 2 - 0.50;
-  mouse.y = -(e.clientY / window.innerHeight) * 2 + 0.50;
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
   
   raycaster2.setFromCamera(mouse, camera);
   intersects = raycaster2.intersectObjects(interactables, true);

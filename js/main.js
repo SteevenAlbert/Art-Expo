@@ -35,8 +35,8 @@ animate();
 function init() {
   //Standard Initalization
   scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x11111f, 0.02);
-  camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.001, 1000);
+  scene.fog = new THREE.FogExp2(0x11111f, 0.013);
+  camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
   camera.position.set(-70, player.height, 0);
   //camera.lookAt(new THREE.Vector3(0,player.height,0));
   renderer = new THREE.WebGLRenderer({
@@ -86,18 +86,18 @@ function animate() {
   
   let angle = Math.atan2(vec.x, vec.z);
  
-  if (controls.isLocked === true) {
-    checkCollision(angle, raycaster, objects, controls, scene);
+  // if (controls.isLocked === true) {
+  //   checkCollision(objects, camera);
    
-  }
-  processKeyboard(angle, camera, player);
+  // }
+  processKeyboard(angle, camera, player, objects);
 
   if(moveToObject){
   let newVec= intersectedPoint;
   camera.position.lerp(newVec,0.1);
   camera.position.y= player.height;
  
-   if(Math.ceil(newVec.x)==Math.ceil(camera.position.x)){
+   if(Math.ceil(newVec.x) + 5 ==Math.ceil(camera.position.x)){
      moveToObject=false;
    }
  }
