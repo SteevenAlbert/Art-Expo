@@ -5,12 +5,12 @@ var worldScene, worldObjects;
 let groundMat, wallMat, ceilingMat1, ceilingMat2, boxMat; //Textures
 
 
-function createWorld(scene, objects){
+function createWorld(scene, objects, loadingManager){
   worldScene = scene;
   worldObjects = objects;
 
   // Skybox
-  createEnvironment();
+  createEnvironment(loadingManager);
   
   //scene.add(new THREE.GridHelper(250,50));
 
@@ -121,10 +121,10 @@ function createWorld(scene, objects){
 }
 
 
-function createEnvironment()
+function createEnvironment(loadingManager)
 {
   // METHOD 1
-  worldScene.background = new THREE.CubeTextureLoader()
+  worldScene.background = new THREE.CubeTextureLoader(loadingManager)
   .setPath('./resources/Environment/')
   .load(
     ['px.png',
@@ -138,8 +138,8 @@ function createEnvironment()
 }
 
 
-function LoadTextures() {
-    const textureLoader = new THREE.TextureLoader();
+function LoadTextures(loadingManager) {
+    const textureLoader = new THREE.TextureLoader(loadingManager);
     textureLoader.wrapS = textureLoader.wrapT = THREE.RepeatWrapping;
     //textureLoader.repeat.set( 10, 10 );
  

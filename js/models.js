@@ -1,10 +1,10 @@
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 
-function addModels(scene, interactive, objects){
+function addModels(scene, interactive, objects, loadingManager){
 var mesh;
 
 // Instantiate a loader
-const gltfLoader = new GLTFLoader();
+const gltfLoader = new GLTFLoader(loadingManager);
 
 // PAINTING
 // Load a glTF resource

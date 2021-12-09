@@ -19,20 +19,26 @@ var color= "0xff0000";
 var moveToObject=false;
 var intersectedPoint;
 
-LoadTextures();
+var loadingManager;
+
+
 init();
+LoadTextures(loadingManager);
 addLights(scene);
-addModels(scene, interactables, objects);
+addModels(scene, interactables, objects, loadingManager);
 addText(scene);
-createWorld(scene, objects);
+createWorld(scene, objects, loadingManager);
 
 onWindowResize();
 animate();
 
 
+
+
 /*---------------------------------FUNCTIONS----------------------------------*/
 /*Initalize Scene*/
 function init() {
+  
   //Standard Initalization
   scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x11111f, 0.013);
@@ -71,6 +77,17 @@ function init() {
 
   raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
   raycaster2 = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 40);
+
+  loadingManager = new THREE.LoadingManager( () => {
+	
+		const loadingScreen = document.getElementById( 'loading-screen' );
+		loadingScreen.classList.add( 'fade-out' );
+		
+		// optional: remove loader from DOM via event listener
+		loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
+		
+	} );
+  
 }
 
 //Updates the scene
@@ -117,6 +134,13 @@ function onWindowResize() {
 function onMouseDown(e){
   intersectedPoint = interact(e, raycaster2, interactables, camera);
   moveToObject=true;
+}
+
+
+function onTransitionEnd( event ) {
+
+	event.target.remove();
+	
 }
 
 window.addEventListener('resize', onWindowResize);
