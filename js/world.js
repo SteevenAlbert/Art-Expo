@@ -274,6 +274,7 @@ function LoadTextures(loadingManager) {
     plane.rotation.x =xRot;
     plane.rotation.y = yRot;
     plane.position.copy(new THREE.Vector3(x, y, z));
+    plane.receiveShadow = true;
     worldScene.add(plane);
   }
 
@@ -303,6 +304,7 @@ function LoadTextures(loadingManager) {
       kept.rotation.copy(worldObjects[index].rotation);
       kept.updateMatrix();
 
+      kept.castShadow = true;
       worldScene.remove(worldObjects[index]);
       worldObjects[index] = kept;
       worldObjects[index].updateMatrix();
