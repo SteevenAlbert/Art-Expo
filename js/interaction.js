@@ -3,11 +3,9 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module
 let object,intersects;
 
 function interact(e, raycaster2, interactables, camera){
-  var mouse = new THREE.Vector2();  
-  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-  
-  raycaster2.setFromCamera(mouse, camera);
+  var cursor = new THREE.Vector2(0,0);  
+  console.log(cursor);
+  raycaster2.setFromCamera(cursor, camera);
   intersects = raycaster2.intersectObjects(interactables, true);
   if(intersects.length>0){
   intersects[0].object.material.color.set(Math.random() * 0xffffff);
