@@ -28,15 +28,13 @@ function createWorld(scene, objects, loadingManager){
 
   /*Inner Walls*/
   //wall 4
-  createBox( 60, 10, 1 ,     -80, 5, 0,      0, -Math.PI/2);
-      //Creating door in wall 4
-      makeAHole(4,    5, 8, 1,    0,-2, -15);
+  createBox( 30, 10, 1 ,     -80, 5, 0,      0, -Math.PI/2);
   //wall 5
-  createBox(41, 10, 1,   -50, 5, 16);
+  createBox(95, 10, 1,   -77, 5, 16);
   //wall 6
   createBox(32, 10, 1,   -30, 5, 0.5,   0, -Math.PI/2);
   //wall 7
-  createBox(41, 10, 1,   -9.5, 5, -15);
+  createBox(41, 10, 1,   -10, 5, -15);
   //wall 8
   createBox(32, 10, 1,    10, 5, 0.5,     0, -Math.PI/2,      wallMat);
   //wall 9
@@ -59,7 +57,7 @@ function createWorld(scene, objects, loadingManager){
   let center2 = new THREE.Vector3(0, 10, 0);
   createBox(250, 60, 1, center2.x, center2.y, center2.z, Math.PI / 2, 0, wallMat);
 
-  /*Glass Roof Parts*/ 
+  /*Glass Part in Roof*/ 
     //glass in Room A
     makeAHole(12,     28, 22, 1,     -51,0,0);
     createPlane(28, 22,     1, 1,     center2.x-51, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
@@ -97,27 +95,18 @@ function createWorld(scene, objects, loadingManager){
     */
 
 //Creating Windows 
-    makeAHole(0,    7, 7, 1,    -70, 0, 0);
-    makeAHole(0,    7, 7, 1,    -50, 0, 0);
-    makeAHole(0,    7, 7, 1,    -30, 0, 0);
-    makeAHole(0,    7, 7, 1,    -10, 0, 0);
-    makeAHole(0,    7, 7, 1,    10, 0, 0);
-    makeAHole(0,    7, 7, 1,    30, 0, 0);
-    makeAHole(0,    7, 7, 1,    50, 0, 0);
-    makeAHole(0,    7, 7, 1,    70, 0, 0);
-    makeAHole(0,    7, 7, 1,    90, 0, 0);
-    makeAHole(0,    7, 7, 1,    110, 0, 0);
+    makeAHole(0,    12, 6, 1,    -70, 0, 0);
+    makeAHole(0,    12, 6, 1,    -25, 0, 0);
+    makeAHole(0,    12, 6, 1,    20, 0, 0);
+    makeAHole(0,    12, 6, 1,    65, 0, 0);
+    makeAHole(0,    12, 6, 1,    110, 0, 0);
 
-    makeAHole(1,    7, 7, 1,    -70, 0, 0);
-    makeAHole(1,    7, 7, 1,    -50, 0, 0);
-    makeAHole(1,    7, 7, 1,    -30, 0, 0);
-    makeAHole(1,    7, 7, 1,    -10, 0, 0);
-    makeAHole(1,    7, 7, 1,    10, 0, 0);
-    makeAHole(1,    7, 7, 1,    30, 0, 0);
-    makeAHole(1,    7, 7, 1,    50, 0, 0);
-    makeAHole(1,    7, 7, 1,    70, 0, 0);
-    makeAHole(1,    7, 7, 1,    90, 0, 0);
-    makeAHole(1,    7, 7, 1,    110, 0, 0);
+
+    makeAHole(1,    12, 6, 1,    -70, 0, 0);
+    makeAHole(1,    12, 6, 1,    -25, 0, 0);
+    makeAHole(1,    12, 6, 1,    20, 0, 0);
+    makeAHole(1,    12, 6, 1,    65, 0, 0);
+    makeAHole(1,    12, 6, 1,    110, 0, 0);
 }
 
 
@@ -229,10 +218,10 @@ function LoadTextures(loadingManager) {
       clearcoat: 1,
       clearcoatRoughness: 0,
       side: THREE.DoubleSide,
-      transparent: true,
+      //transparent: true,
       reflectivity: 0.5,
     });
-  
+    
     ceilingMat2 = new THREE.MeshStandardMaterial({
       color: 'black',
       wireframe: true,

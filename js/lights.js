@@ -13,20 +13,22 @@ function addLights(scene) {
     addSpotlight(-35, 8, i, -30, 4, i*0.6, scene, 0.2, 16, 0.7);
   }
 
+  /*
   // Left hallway
-  // for (let j = -27; j <= -17; j+=10){
-  //   for (let i = -75; i < 125; i+=20){
-  //     addLight(i, 9, j, scene);
-  //   }
-  // }
+  for (let j = -27; j <= -17; j+=10){
+    for (let i = -75; i < 125; i+=20){
+      addLight(i, 9, j, scene);
+    }
+  }
 
   // Right hallway
-  // for (let j = 17; j <= 27; j+=10){
-  //   for (let i = -75; i < 125; i+=20){
-  //     addLight(i, 9, j, scene);
-  //   }
-  // }
-    
+  for (let j = 17; j <= 27; j+=10){
+    for (let i = -75; i < 125; i+=20){
+      addLight(i, 9, j, scene);
+    }
+  }
+  */
+
   // Main lights
   let ambientLight = new THREE.AmbientLight(0xFBF8EA, 0.8);
   scene.add(ambientLight);

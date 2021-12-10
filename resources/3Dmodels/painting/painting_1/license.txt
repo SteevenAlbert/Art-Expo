@@ -1,0 +1,11 @@
+Model Information:
+* title:	Painting_1
+* source:	https://sketchfab.com/3d-models/painting-1-b484376d4d97481699d49e9421d4dc0b
+* author:	rk_0009 (https://sketchfab.com/rk_0009)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Painting_1" (https://sketchfab.com/3d-models/painting-1-b484376d4d97481699d49e9421d4dc0b) by rk_0009 (https://sketchfab.com/rk_0009) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

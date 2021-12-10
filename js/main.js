@@ -13,7 +13,7 @@ import {interact} from './interaction.js';
 var controls, raycaster, raycaster2;
 var objects = [];
 var interactables = [];
-const player = { height: 1.7, speed: 0.2, turnSpeed: Math.PI * 0.009 };
+const player = { height: 2.7, speed: 0.2, turnSpeed: Math.PI * 0.009 };
 var scene, camera, renderer;
 var color= "0xff0000";
 var moveToObject=false;
@@ -43,7 +43,7 @@ function init() {
   scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x11111f, 0.013);
   camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
-  camera.position.set(-70, player.height, 0);
+  camera.position.set(-110, player.height, 5);
   //camera.lookAt(new THREE.Vector3(0,player.height,0));
   renderer = new THREE.WebGLRenderer({
     antialias: true

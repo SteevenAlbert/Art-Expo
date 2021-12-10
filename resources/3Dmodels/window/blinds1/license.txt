@@ -1,0 +1,11 @@
+Model Information:
+* title:	Window Blinds
+* source:	https://sketchfab.com/3d-models/window-blinds-883b037fccfd48d1910e1c1b799381c5
+* author:	James (https://sketchfab.com/james)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Window Blinds" (https://sketchfab.com/3d-models/window-blinds-883b037fccfd48d1910e1c1b799381c5) by James (https://sketchfab.com/james) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
