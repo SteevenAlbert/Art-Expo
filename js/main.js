@@ -108,16 +108,17 @@ function animate() {
    
   // }
   processKeyboard(angle, camera, player, objects);
-
+  if (controls.isLocked === true){
   if(moveToObject){
   let newVec= intersectedPoint;
   camera.position.lerp(newVec,0.1);
   camera.position.y= player.height;
  
-   if(Math.ceil(newVec.x) + 5 ==Math.ceil(camera.position.x)){
+   if(Math.ceil(newVec.x) == Math.ceil(camera.position.x)){
      moveToObject=false;
    }
  }
+}
   //spotLightHelper.update();
   renderer.render(scene, camera);
 }
@@ -133,6 +134,8 @@ function onWindowResize() {
 
 function onMouseDown(e){
   intersectedPoint = interact(e, raycaster2, interactables, camera);
+  intersectedPoint.x-=5;
+  intersectedPoint.z-=5;
   moveToObject=true;
 }
 
