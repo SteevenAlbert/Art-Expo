@@ -141,9 +141,7 @@ function onMouseDown(e){
 
 
 function onTransitionEnd( event ) {
-
 	event.target.remove();
-	
 }
 
 window.addEventListener('resize', onWindowResize);
