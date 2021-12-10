@@ -28,9 +28,9 @@ function createWorld(scene, objects, loadingManager){
 
   /*Inner Walls*/
   //wall 4
-  createBox( 30, 10, 1 ,     -80, 5, 0,      0, -Math.PI/2);
+  createBox( 32, 10, 1 ,  -80, 5, 0,      0, -Math.PI/2);
   //wall 5
-  createBox(95, 10, 1,   -77, 5, 16);
+  createBox(51, 10, 1,   -55, 5, 16);
   //wall 6
   createBox(32, 10, 1,   -30, 5, 0.5,   0, -Math.PI/2);
   //wall 7
