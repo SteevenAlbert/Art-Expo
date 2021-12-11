@@ -128,9 +128,13 @@ function onWindowResize() {
 
 function onMouseDown(e){
   intersectedPoint = interact(e, raycaster2, interactables, camera);
-  intersectedPoint.x-=5;
-  intersectedPoint.z-=5;
-  moveToObject=true;
+  if (intersectedPoint != null)
+  {
+    intersectedPoint.x-=5;
+    intersectedPoint.z-=5;
+    moveToObject=true;
+  }
+  
 }
 
 
