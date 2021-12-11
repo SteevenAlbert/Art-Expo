@@ -1,5 +1,5 @@
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
-
+import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 function addModels(scene, interactive, objects, loadingManager){
     var mesh;
 
@@ -8,80 +8,25 @@ function addModels(scene, interactive, objects, loadingManager){
 
     //-------------------------------------- PAINTINGS --------------------------------------//
     // Load a glTF resource
-    gltfLoader.load(
-        // resource URL
-        './resources/3Dmodels/painting/painting/scene.gltf',
-        // called when the resource is loaded
-        function ( gltf ) {
-        mesh = gltf.scene.children[0];
-        mesh.position.set(-40, 4, 15.5);
-        mesh.rotation.set(-1.5*Math.PI, 0, 0);
-        mesh.scale.set(0.015,0.015,0.015);
-        scene.add( gltf.scene );
-        interactive.push(gltf.scene);
-        }
-    );
 
     gltfLoader.load(
         './resources/3Dmodels/painting/abstractPainting.gltf',
         function ( gltf ) {
         mesh = gltf.scene.children[0];
-        mesh.position.set(-50, 4, 15.5);
-        mesh.rotation.set(1.5*Math.PI, 0, 0);
-        mesh.scale.set(3,3,3);
-        scene.add( gltf.scene );
-        interactive.push(gltf.scene);
-        }
-    );
-
-    gltfLoader.load(
-        './resources/3Dmodels/painting/jacket_gray_painting/scene.gltf',
-        //'./resources/3Dmodels/painting/scanned_oil_painting/scene.gltf',
-        function ( gltf ) {
-        mesh = gltf.scene.children[0];
         mesh.position.set(-60, 4, 15.5);
-        mesh.rotation.set(0, 0, 0);
-        mesh.scale.set(100,100,100);
+        mesh.rotation.set(1.5*Math.PI, 0, 0);
+        mesh.scale.set(4,3,4);
         scene.add( gltf.scene );
         interactive.push(gltf.scene);
         }
     );
-
-    /*
-    gltfLoader.load(
-        './resources/3Dmodels/painting/field_painting_by_jasper_johns/scene.gltf',
-        function ( gltf ) {
-        mesh = gltf.scene.children[0];
-        mesh.position.set(-60.5, 4, 15.5);
-        mesh.rotation.set(0, -1.5*Math.PI, 0);
-        mesh.scale.set(2,2,2);
-        scene.add( gltf.scene );
-        interactive.push(gltf.scene);
-        }
-    );
-    */
-
-    /*
-    gltfLoader.load(
-        './resources/3Dmodels/painting/painting_2_daea2c/scene.gltf',
-        function ( gltf ) {
-        mesh = gltf.scene.children[0];
-        mesh.position.set(-58.3, 4, 14.5);
-        mesh.rotation.set(-Math.PI/10, 0, -Math.PI/6);
-        mesh.scale.set(0.1,0.1,0.1);
-        scene.add( gltf.scene );
-        interactive.push(gltf.scene);
-        }
-    );
-    */
-
 
     //------------------------ STATUE ------------------------//
     gltfLoader.load(
         './resources/3Dmodels/statues/Marblebust/marble_bust_01_2k.gltf',
         function ( gltf ) {
         mesh = gltf.scene.children[0];
-        mesh.position.set(-50, 0, 0);
+        mesh.position.set(0, 0, 0);
         mesh.rotation.set(0, 0, 0);
         mesh.scale.set(10,10,10);
         scene.add( gltf.scene );
@@ -90,20 +35,6 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-    /*
-    gltfLoader.load(
-        './resources/3Dmodels/statues/octo_splat_face/scene.gltf',
-        function ( gltf ) {
-        mesh = gltf.scene.children[0];
-        mesh.position.set(-10, 0, 0);
-        mesh.rotation.set(0, 0, 0);
-        mesh.scale.set(10,10,10);
-        scene.add( gltf.scene );
-        interactive.push(gltf.scene);
-        objects.push(gltf.scene);
-        }
-    );
-    */
 
     //-------------------------------------- SPOTLIGHTs --------------------------------------//
     // First room right SPOTLIGHTs
@@ -163,7 +94,6 @@ function addModels(scene, interactive, objects, loadingManager){
     }
 
     //-------------------------------------- WINDOWS --------------------------------------//
-    ///*
     //ON LEFT SIDE
     for (let i = -71.5; i<=146.5; i+=45)
     {
@@ -265,36 +195,44 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-    //-------------------------------------- TEST --------------------------------------//
-
-    /*
+    //Signs
     gltfLoader.load(
-        './resources/3Dmodels/window/window_mat_test_v001/scene.gltf',
+        './resources/3Dmodels/signs/ExitSign/scene.gltf',
         function ( gltf ) {
             mesh = gltf.scene.children[0];
-            mesh.position.set(-68, 2, -30);
-            mesh.rotation.set(-Math.PI/2, 0, 0);
-            mesh.scale.set(0.065,0.001,0.041);
+            mesh.position.set(-80, 5, 21);
+            mesh.rotation.set(Math.PI/2, Math.PI, Math.PI/2);
+            mesh.scale.set(1,1,1);
             scene.add( gltf.scene );
             objects.push(gltf.scene);
         }
     );
-    //*/
 
-    /*
     gltfLoader.load(
-        './resources/3Dmodels/window/window/scene.gltf',
+        './resources/3Dmodels/signs/arrow/scene.gltf',
         function ( gltf ) {
             mesh = gltf.scene.children[0];
-            mesh.position.set(-70, 0, -30);
-            mesh.rotation.set(-Math.PI/2, 0, -Math.PI/1.9);         //...
-            mesh.scale.set(0.2,0.3,0.1);
-            scene.add( gltf.scene );
-            objects.push(gltf.scene);
+            mesh.position.set(-80, 6.5, -20.5);
+            mesh.rotation.set(0, 0, -Math.PI/2);
+            mesh.scale.set(10,10,10);
+            scene.add(gltf.scene);
         }
     );
-    */
+ 
+    //---------------------- PAINTINGS ------------------------//
+    var pearlPaintingGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
+    var pearlPaintingMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/pearl.jpg") });
+    var pearlPainting = new THREE.Mesh( pearlPaintingGeo, pearlPaintingMat );
+    pearlPainting.position.set(-40, 4, 15.5);
+    scene.add( pearlPainting );
+    interactive.push(pearlPainting);
 
+    var selfPortraitGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
+    var selfPortraitMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/self_portrait.jpg") });
+    var selfPortrait = new THREE.Mesh(selfPortraitGeo, selfPortraitMat);
+    selfPortrait.position.set(-50, 4, 15.5);
+    scene.add( selfPortrait );
+    interactive.push(selfPortrait);
 }
 
 export{addModels};

@@ -52,7 +52,7 @@ function addLights(scene) {
 // Adding a spotlight from a point to a target point 
 function addSpotlight(x, y, z, targetX, targetY, targetZ, scene, intensity, distance, angle)
 {
-  var color =0xFFFFFF, intensity = intensity || 0.5, distance = distance ||10, angle = angle||0.55, penumbra = penumbra ||  0.2; 
+  var color =0xFFFFFF, intensity = intensity || 0.7, distance = distance ||10, angle = angle||0.55, penumbra = penumbra ||  0.2; 
   let spotLight = new THREE.SpotLight(color, intensity, distance, angle, penumbra);
   spotLight.position.set(x, y, z);
   spotLight.target.position.set(targetX, targetY, targetZ);

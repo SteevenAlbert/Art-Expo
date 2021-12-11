@@ -65,7 +65,7 @@ function init() {
       if(e.target.id=="1"){
           menu.style.visibility  = "hidden";
           controls.lock();
-          //loadMainTheme();
+          loadMainTheme();
       }else
         alert(e.target.id + " was clicked");
     }
