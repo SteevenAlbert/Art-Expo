@@ -44,7 +44,14 @@ function createWorld(scene, objects, loadingManager){
   //wall 11
   createBox(61, 10, 1,   80, 5, -15,         0, 0,            wallMat);
 
-
+  //wall 12
+  createBox( 5, 10, 1 ,  -80, 5, -27.5,      0, -Math.PI/2);
+  //wall 13
+  createBox( 10, 3, 1 ,  -80, 8.5, -20,      0, -Math.PI/2);
+  //wall 14
+  createBox( 5, 10, 1 ,  -80, 5, 27.5,      0, -Math.PI/2);
+  //wall 15
+  createBox( 10, 3, 1 ,  -80, 8.5, 20,      0, -Math.PI/2);
 
 //Create Ground
   let center1 = new THREE.Vector3(0, 0, 0);
@@ -59,32 +66,32 @@ function createWorld(scene, objects, loadingManager){
 
   /*Glass Part in Roof*/ 
     //glass in Room A
-    makeAHole(12,     28, 22, 1,     -51,0,0);
+    makeAHole(16,     28, 22, 1,     -51,0,0);
     createPlane(28, 22,     1, 1,     center2.x-51, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
     createPlane(28, 22,     3, 3,    center2.x-51, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
 
     //glass in Room B
-    makeAHole(12,     28, 22, 1,     31,0,0);
+    makeAHole(16,     28, 22, 1,     31,0,0);
     createPlane(28, 22,     1, 1,     center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
     createPlane(28, 22,     3, 3,    center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
 
     //glass in Room C
-    makeAHole(12,     28, 22, 1,     -10,0,0);
+    makeAHole(16,     28, 22, 1,     -10,0,0);
     createPlane(28, 22,     1, 1,     center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
     createPlane(28, 22,     3, 3,    center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
 
     //glass in Room D
-    makeAHole(12,     52, 22, 1,    80,0,0);
+    makeAHole(16,     52, 22, 1,    80,0,0);
     createPlane(52, 22,    1, 1,     center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
     createPlane(52, 22,     6, 3,    center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
 
     //glass in Right Pathaways
-    makeAHole(12,     172, 8, 1,     19,0,23);
+    makeAHole(16,     172, 8, 1,     19,0,23);
     createPlane(172, 8,     1, 1,     center2.x+19, center2.y+0.5, center2.z+23,     Math.PI/2, 0,      ceilingMat1);
     createPlane(172, 8,     21, 1,    center2.x+19, center2.y+0.5, center2.z+23,     Math.PI/2, 0,      ceilingMat2);
 
     //glass in Left Pathaways
-    makeAHole(12,     172, 8, 1,     19,0,-23);
+    makeAHole(16,     172, 8, 1,     19,0,-23);
     createPlane(172, 8,     1, 1,     center2.x+19, center2.y+0.5, center2.z-23,     Math.PI/2, 0,      ceilingMat1);
     createPlane(172, 8,     21, 1,    center2.x+19, center2.y+0.5, center2.z-23,     Math.PI/2, 0,      ceilingMat2);
 
