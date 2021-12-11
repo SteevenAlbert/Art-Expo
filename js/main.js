@@ -33,51 +33,48 @@ onWindowResize();
 animate();
 
 
-
-
-/*---------------------------------FUNCTIONS----------------------------------*/
+/*--------------------------------- INITILIZATION ----------------------------------*/
 /*Initalize Scene*/
 function init() {
   
-  //Standard Initalization
+  //*****CAMERA*****/
   scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x11111f, 0.013);
   camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
   camera.position.set(-110, player.height, 0);
-  //camera.lookAt(new THREE.Vector3(0,player.height,0));
-  renderer = new THREE.WebGLRenderer({
-    antialias: true
-  });
   camera.lookAt(new THREE.Vector3(0,player.height,0));
   scene.add(camera);
+
+  //*****CROSSHAIR*****/
   drawCrosshair(camera);
+
+  //*****RENDERER*****/
+  renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(innerWidth, innerHeight);
-  //renderer.setPixelRatio(window.devicePixelRatio);
   document.body.appendChild(renderer.domElement);
 
-  //Set Controls
+  //*****CONTROLS*****/
   //let controls2 = new OrbitControls(camera, renderer.domElement);
   controls = new PointerLockControls(camera, renderer.domElement);
   
-
-  //menu
+  //*****MENU*****/
   var menu = document.getElementById("menu");
   document.getElementById("menu").addEventListener("click",function(e) {
     if(e.target && e.target.nodeName == "LI") {
       if(e.target.id=="1"){
           menu.style.visibility  = "hidden";
           controls.lock();
-          
-        //loadMainTheme();
+          //loadMainTheme();
       }else
         alert(e.target.id + " was clicked");
     }
-});
+  });
 
   raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
   raycaster2 = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 40);
 
+  //*****LOADING SCREEN*****/
   loadingManager = new THREE.LoadingManager( () => {
 	
 		const loadingScreen = document.getElementById( 'loading-screen' );
@@ -90,36 +87,33 @@ function init() {
   
 }
 
-//Updates the scene
+//*--------------------------------- UPDATE SCENE ----------------------------------*/
 function animate() {
+  
   requestAnimationFrame(animate);
 
   if (controls.isLocked === false) {
     menu.style.visibility = "visible";
-   }
+  }
 
   let vec = new THREE.Vector3();
   camera.getWorldDirection(vec);
   
   let angle = Math.atan2(vec.x, vec.z);
- 
-  // if (controls.isLocked === true) {
-  //   checkCollision(objects, camera);
-   
-  // }
   processKeyboard(angle, camera, player, objects);
+  
   if (controls.isLocked === true){
-  if(moveToObject){
-  let newVec= intersectedPoint;
-  camera.position.lerp(newVec,0.1);
-  camera.position.y= player.height;
- 
-   if(Math.ceil(newVec.x) == Math.ceil(camera.position.x)){
-     moveToObject=false;
-   }
- }
-}
-  //spotLightHelper.update();
+    if(moveToObject){
+      let newVec= intersectedPoint;
+      camera.position.lerp(newVec,0.1);
+      camera.position.y= player.height;
+    
+      if(Math.ceil(newVec.x) == Math.ceil(camera.position.x)){
+        moveToObject=false;
+      }
+    }
+  }
+
   renderer.render(scene, camera);
 }
 

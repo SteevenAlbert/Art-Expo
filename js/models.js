@@ -6,7 +6,7 @@ function addModels(scene, interactive, objects, loadingManager){
     // Instantiate a loader
     const gltfLoader = new GLTFLoader(loadingManager);
 
-    //------------------------ PAINTINGS ------------------------//
+    //-------------------------------------- PAINTINGS --------------------------------------//
     // Load a glTF resource
     gltfLoader.load(
         // resource URL
@@ -105,7 +105,7 @@ function addModels(scene, interactive, objects, loadingManager){
     );
     */
 
-    //------------------------ SPOTLIGHTs ------------------------//
+    //-------------------------------------- SPOTLIGHTs --------------------------------------//
     // First room right SPOTLIGHTs
     for (let i = -60; i <= -40; i+=10){
         gltfLoader.load(
@@ -162,7 +162,7 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     }
 
-    //------------------------ WINDOWS ------------------------//
+    //-------------------------------------- WINDOWS --------------------------------------//
     ///*
     //ON LEFT SIDE
     for (let i = -71.5; i<=146.5; i+=45)
@@ -198,7 +198,7 @@ function addModels(scene, interactive, objects, loadingManager){
         );
     }
 
-    //------------------------ RECEPTION ------------------------//
+    //-------------------------------------- RECEPTION --------------------------------------//
     // Desk
     gltfLoader.load(
         './resources/3Dmodels/reception/desk/reception_desk_proposal/scene.gltf',
@@ -265,7 +265,7 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-    //------------------------ TEST ------------------------//
+    //-------------------------------------- TEST --------------------------------------//
 
     /*
     gltfLoader.load(

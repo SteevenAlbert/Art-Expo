@@ -1,6 +1,6 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 
-let object,intersects;
+let object, intersects;
 
 function interact(e, raycaster2, interactables, camera){
   var cursor = new THREE.Vector2(0,0);  
