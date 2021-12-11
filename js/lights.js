@@ -36,19 +36,19 @@ function addLights(scene) {
   // let ambientLight = new THREE.AmbientLight(0xFBF8EA, 0.8);
   // scene.add(ambientLight);
 
-  // let directionalLight = new THREE.SpotLight(0xF0FBFA, 0.4);
-  // directionalLight.castShadow = true;
-  // directionalLight.position.set(-50, 10, -50);
-  // directionalLight.target.position.set(-20, 0, -70);
-  // scene.add(directionalLight.target);
-  // scene.add(directionalLight);
+  let directionalLight = new THREE.DirectionalLight(0xF0FBFA, 0.2);
+  directionalLight.castShadow = true;
+  directionalLight.position.set(-300, 10, -50);
+  directionalLight.target.position.set(-200, 0, 50);
+  scene.add(directionalLight.target);
+  scene.add(directionalLight);
 
-  // let directionalLight2 = new THREE.DirectionalLight(0xF0FBFA, 0.4);
-  // directionalLight2.castShadow = true;
-  // directionalLight2.position.set(70,40, 50);
-  // directionalLight2.target.position.set(125, -10, 0);
-  // scene.add(directionalLight2.target);
-  // scene.add(directionalLight2);
+  let directionalLight2 = new THREE.DirectionalLight(0xF0FBFA, 0.2);
+  directionalLight2.castShadow = true;
+  directionalLight2.position.set(70,40, 50);
+  directionalLight2.target.position.set(125, -10, 0);
+  scene.add(directionalLight2.target);
+  scene.add(directionalLight2);
 
   }
   
