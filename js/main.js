@@ -71,7 +71,7 @@ function init() {
     }
   });
 
-  raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
+  //raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
   raycaster2 = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 40);
 
   //*****LOADING SCREEN*****/
@@ -94,6 +94,8 @@ function animate() {
 
   if (controls.isLocked === false) {
     menu.style.visibility = "visible";
+  }else{
+    menu.style.visibility = "hidden";
   }
 
   let vec = new THREE.Vector3();
