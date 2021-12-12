@@ -105,7 +105,7 @@ function animate() {
   processKeyboard(angle, camera, player, objects);
   
   if (controls.isLocked === true){
-    if(moveToObject){
+    if(moveToObject && intersectedPoint!=null){
       let newVec= intersectedPoint;
       camera.position.lerp(newVec,0.1);
       camera.position.y= player.height;

@@ -41,7 +41,6 @@ function createWorld(scene, objects, loadingManager){
   createBox(32, 10, 1,   50, 5, 0.5,     0, -Math.PI/2,      wallMat);
   //wall 11
   createBox(61, 10, 1,   80, 5, -15,         0, 0,            wallMat);
-
   //wall 12
   createBox( 5, 10, 1 ,  -80, 5, -27.5,      0, -Math.PI/2);
   //wall 13
@@ -95,7 +94,6 @@ function createWorld(scene, objects, loadingManager){
   for (let j = 0; j<=1; j++)
     for (let i = -70; i <= 110; i+=45)
       makeAHole(j, 12, 6, 1, i, 0, 0);
-
 }
 
 //---------------------------------------- CREATE SKYBOX ----------------------------------------//
@@ -112,7 +110,6 @@ function createEnvironment(loadingManager)
     'pz.png',
     'nz.png',
   ]);
-
 }
 
 //---------------------------------------- CREATE WALL -----------------------------------------//
@@ -267,7 +264,7 @@ function LoadTextures(loadingManager) {
   // Create ceiling material
   ceilingMat1 = new THREE.MeshPhysicalMaterial( {
     color: 0xffffff,
-    transmission: 1,  
+    transmission: 0.8,  
     roughness: 0.1,
     ior: 1.5,
     opacity: 1,
@@ -291,7 +288,7 @@ function LoadTextures(loadingManager) {
 //---------------------------------------- DRAW CORSSHAIR ----------------------------------------//
 function drawCrosshair(camera){
   var x = 0.003, y = 0.003;
-  const material = new THREE.LineBasicMaterial({
+  const lineMat = new THREE.LineBasicMaterial({
     color: 0xffffff,
     linewidth: 100,
     linecap: 'round',
@@ -304,16 +301,8 @@ function drawCrosshair(camera){
   points.push(new THREE.Vector3(0, 0, 0));
   points.push(new THREE.Vector3(x, 0, 0));    
   points.push(new THREE.Vector3(-x, 0, 0));
-  const geometry = new THREE.BufferGeometry().setFromPoints( points );
-  
-  const crosshair = new THREE.Line( geometry, material );
-  var crosshairPercentX = 50;
-  var crosshairPercentY = 50;
-  var crosshairPositionX = (crosshairPercentX / 100) * 2 - 1;
-  var crosshairPositionY = (crosshairPercentY / 100) * 2 - 1;
-  
-  crosshair.position.x = crosshairPositionX * camera.aspect;
-  crosshair.position.y = crosshairPositionY;
+  const lineGeo = new THREE.BufferGeometry().setFromPoints( points );
+  const crosshair = new THREE.Line( lineGeo, lineMat );
   crosshair.position.z = -0.3;
   camera.add( crosshair );
 }

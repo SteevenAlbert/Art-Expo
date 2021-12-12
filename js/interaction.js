@@ -6,12 +6,11 @@ function interact(e, raycaster, interactables, camera){
   var cursor = new THREE.Vector2(0,0);  
   raycaster.setFromCamera(cursor, camera);
   intersects = raycaster.intersectObjects(interactables, true);
-  if(intersects.length>0){
-   intersects[0].object.material.color.set(Math.random() * 0xffffff);
-}
-  if (intersects.length != 0)
+
+  if (intersects.length != 0){
+    intersects[0].object.material.color.set(Math.random() * 0xffffff);
     return intersects[0].point;
-  else
+  }else
     return null;
 }
 
