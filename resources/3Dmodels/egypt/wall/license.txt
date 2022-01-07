@@ -1,0 +1,11 @@
+Model Information:
+* title:	Tomb of Mereruka, Chamber A13, North Wall
+* source:	https://sketchfab.com/3d-models/tomb-of-mereruka-chamber-a13-north-wall-5bdf831774b643c8b6f750289562e7c8
+* author:	danderson4 (https://sketchfab.com/danderson4)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Tomb of Mereruka, Chamber A13, North Wall" (https://sketchfab.com/3d-models/tomb-of-mereruka-chamber-a13-north-wall-5bdf831774b643c8b6f750289562e7c8) by danderson4 (https://sketchfab.com/danderson4) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)

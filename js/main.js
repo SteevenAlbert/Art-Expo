@@ -14,7 +14,7 @@ var controls, raycaster, raycaster2;
 var objects = [];
 var interactables = [];
 const player = { height: 2.7, speed: 0.2, turnSpeed: Math.PI * 0.009 };
-var scene, camera, renderer;
+var scene, camera, renderer,light, cameraAndLight;
 var color= "0xff0000";
 var moveToObject=false;
 var intersectedPoint;
@@ -41,9 +41,18 @@ function init() {
   scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x11111f, 0.013);
   camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
-  camera.position.set(-110, player.height, 0);
-  camera.lookAt(new THREE.Vector3(0,player.height,0));
   scene.add(camera);
+
+  light = new THREE.PointLight(0xffffff, 0, 20);
+  light.castShadow = true;
+
+  cameraAndLight = new THREE.Object3D();
+  cameraAndLight.add(camera);
+  cameraAndLight.add(light);
+  scene.add(cameraAndLight);
+  
+  cameraAndLight.position.set(-110, player.height, 0);
+  cameraAndLight.children[0].lookAt(new THREE.Vector3(0,player.height,0));
 
   //*****CROSSHAIR*****/
   drawCrosshair(camera);
@@ -52,6 +61,8 @@ function init() {
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(innerWidth, innerHeight);
+  renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   document.body.appendChild(renderer.domElement);
 
   //*****CONTROLS*****/
@@ -70,6 +81,7 @@ function init() {
         alert(e.target.id + " was clicked");
     }
   });
+
 
   //raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 10);
   raycaster2 = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 40);
@@ -102,7 +114,7 @@ function animate() {
   camera.getWorldDirection(vec);
   
   let angle = Math.atan2(vec.x, vec.z);
-  processKeyboard(angle, camera, player, objects);
+  processKeyboard(angle, cameraAndLight, player, objects);
   
   if (controls.isLocked === true){
     if(moveToObject && intersectedPoint!=null){

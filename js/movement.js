@@ -1,4 +1,5 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
+import { turnLightOff, turnLightOn } from './lights.js';
 var keyboard = [];
 let  object, player, runFactor;
 
@@ -22,7 +23,7 @@ function checkCollision(objects, camera) {
   
 //-------------------------------- KEYBOARD PROCESSING --------------------------------//
 // Process Keyboard Input and apply changes accordingly 
-function processKeyboard(angle, camera, playerAtt, objects) {
+function processKeyboard(angle, cameraAndLight, playerAtt, objects) {
   runFactor=1;
   player = playerAtt;
   if(keyboard[16]){
@@ -31,61 +32,74 @@ function processKeyboard(angle, camera, playerAtt, objects) {
   var collided= false;
 
   // Try moving the camera forward, detect collision then move it backward again
-  moveCameraW(camera, angle, 5);
-  collided = checkCollision(objects, camera);
-  moveCameraS(camera, angle, 5);
+  moveCameraW(cameraAndLight, angle, 5);
+  collided = checkCollision(objects, cameraAndLight);
+  moveCameraS(cameraAndLight, angle, 5);
 
   // If the camera didn't collide with any object, allow movement forward
   if (!collided){
     if (keyboard[87]) { // W key
-      moveCameraW(camera, angle);
+      moveCameraW(cameraAndLight, angle);
     }
   }
 
   // Try moving the camera backward, detect collision then move it forward again
-  moveCameraS(camera, angle, 5);
-  collided = checkCollision(objects, camera);
-  moveCameraW(camera, angle, 5);
+  moveCameraS(cameraAndLight, angle, 5);
+  collided = checkCollision(objects, cameraAndLight);
+  moveCameraW(cameraAndLight, angle, 5);
 
   // If the camera didn't collide with any object, allow movement backward
   if (!collided){
     if (keyboard[83]) { // S key
-      moveCameraS(camera, angle);
+      moveCameraS(cameraAndLight, angle);
     }
   }
 
   // Try moving the camera to the left, detect collision then move it to the right again
-  moveCameraA(camera, angle, 5);
-  collided = checkCollision(objects, camera);
-  moveCameraD(camera, angle, 5);
+  moveCameraA(cameraAndLight, angle, 5);
+  collided = checkCollision(objects, cameraAndLight);
+  moveCameraD(cameraAndLight, angle, 5);
 
   // If the camera didn't collide with any object, allow movement to the left
   if (!collided){
     if (keyboard[65]) { // A key
-      moveCameraA(camera, angle);
+      moveCameraA(cameraAndLight, angle);
     }
   }
   
   // Try moving the camera to the right, detect collision then move it to the left again
-  moveCameraD(camera, angle, 5);
-  collided = checkCollision(objects, camera);
-  moveCameraA(camera, angle, 5);
+  moveCameraD(cameraAndLight, angle, 5);
+  collided = checkCollision(objects, cameraAndLight);
+  moveCameraA(cameraAndLight, angle, 5);
 
   // If the camera didn't collide with any object, allow movement to the right
   if (!collided){
     if (keyboard[68]) { // D key
-      moveCameraD(camera, angle);
+      moveCameraD(cameraAndLight, angle);
     }
   }
     
   // Left arrow key rotates the camera
   if(keyboard[37]){ 
-    camera.rotation.x += player.turnSpeed;
+    cameraAndLight.rotation.x += player.turnSpeed;
   }
   
   // Right arrow key rotates the camera
   if(keyboard[39]){ 
-    camera.rotation.x -= player.turnSpeed;
+    cameraAndLight.rotation.x -= player.turnSpeed;
+  }
+
+  // Check if the user is in the Egypt room
+  if (cameraAndLight.position.x < 50 && cameraAndLight.position.x> 12 && 
+    cameraAndLight.position.z < 12 && cameraAndLight.position.z > -18)
+  {
+    cameraAndLight.children[1].intensity = 1;
+    turnLightOff();
+  }
+  else
+  {
+    cameraAndLight.children[1].intensity = 0;
+    turnLightOn();
   }
 }
   

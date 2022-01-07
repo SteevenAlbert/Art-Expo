@@ -9,7 +9,7 @@ function addText(scene)
     function (font){
 
         // Set geometry
-        const geometry = new THREE.TextGeometry ('2021 ART EXPO', {
+        const geometry = new THREE.TextGeometry ('EGYPT 3150 BC', {
             font: font,
             size: 0.6,
             height: 0.001,
@@ -22,7 +22,7 @@ function addText(scene)
             new THREE.MeshPhongMaterial({color: 0x000000}) ])
 
         mesh.castShadow = true
-        mesh.position.x = -30.5
+        mesh.position.x = 49.5
         mesh.position.y = 6
         mesh.position.z = -10
         mesh.rotation.y = - Math.PI/2
@@ -50,7 +50,7 @@ function addText(scene)
             new THREE.MeshPhongMaterial({color: 0x000000})])
 
         mesh.castShadow = true
-        mesh.position.x = -30.5
+        mesh.position.x = 49.5
         mesh.position.y = 5
         mesh.position.z = -10
         mesh.rotation.y = - Math.PI/2

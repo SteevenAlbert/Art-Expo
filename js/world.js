@@ -2,7 +2,7 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module
 import CSG from './THREE-CSGMesh-master/three-csg.js';
 
 var worldScene, worldObjects;
-let groundMat, wallMat, ceilingMat1, ceilingMat2; //Textures
+let groundMat, wallMat, ceilingMat1, ceilingMat2, glassMat; //Textures
 
 //-------------------------------- CREATING WORLD --------------------------------//
 function createWorld(scene, objects, loadingManager){
@@ -50,14 +50,14 @@ function createWorld(scene, objects, loadingManager){
   //wall 15
   createBox( 10, 3, 1 ,  -80, 8.5, 20,      0, -Math.PI/2);
 
+  // Create Ceiling -------------------------------------------------------------------
+  let center2 = new THREE.Vector3(0, 10, 0);
+  createBox(250, 60, 1, center2.x, center2.y, center2.z, Math.PI / 2, 0, wallMat);
+
   // Ground --------------------------------------------------------------------------
   let center1 = new THREE.Vector3(0, 0, 0);
   createPlane(250, 60, 1, 1, center1.x, center1.y, center1.z, -Math.PI / 2, 0, groundMat);
 
-
-  // Create Ceiling -------------------------------------------------------------------
-  let center2 = new THREE.Vector3(0, 10, 0);
-  createBox(250, 60, 1, center2.x, center2.y, center2.z, Math.PI / 2, 0, wallMat);
 
   /******Glass Part in Roof******/ 
   // glass in Room A
@@ -66,9 +66,9 @@ function createWorld(scene, objects, loadingManager){
   createPlane(28, 22,     3, 3,    center2.x-51, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
 
   //glass in Room B
-  makeAHole(16,           28, 22, 1,      31,0,0);
-  createPlane(28, 22,     1, 1,    center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
-  createPlane(28, 22,     3, 3,    center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
+  // makeAHole(16,           28, 22, 1,      31,0,0);
+  // createPlane(28, 22,     1, 1,    center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
+  // createPlane(28, 22,     3, 3,    center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
 
   //glass in Room C
   makeAHole(16,           28, 22, 1,      -10,0,0);
@@ -90,6 +90,38 @@ function createWorld(scene, objects, loadingManager){
   createPlane(172, 8,     1, 1,     center2.x+19, center2.y+0.5, center2.z-23,     Math.PI/2, 0,      ceilingMat1);
   createPlane(172, 8,     21, 1,    center2.x+19, center2.y+0.5, center2.z-23,     Math.PI/2, 0,      ceilingMat2);
 
+  // Coffin Hole in Egypt Room
+  makeAHole(17,           8, 15, 10,     40,0,0);
+  var holeMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/Textures/grayMat.jpg") });
+  // Black cover
+  createPlane(8, 15, 1, 1,  40, -4, 0, -Math.PI / 2, 0,  holeMat);
+  createBox( 8, 4, 0.05 ,   40, -2,  7.5, 0, 0, holeMat);
+  createBox( 8, 4, 0.05 ,   40, -2, -7.5,0, 0, holeMat);
+  createBox( 15, 4, 0.05 ,  44, -2, 0, 0, -Math.PI/2, holeMat);
+  createBox( 15, 4, 0.05 ,  36, -2, 0, 0, -Math.PI/2, holeMat);
+  // Glass box
+  createPlane(8, 15, 1, 1,  40, 1, 0, -Math.PI / 2, 0,  glassMat);
+  createBox( 8, 1, 0.2 ,   40, 0.5, 7.5, 0, 0, glassMat);
+  createBox( 8, 1, 0.2 ,   40, 0.5, -7.5,0, 0, glassMat);
+  createBox( 15, 1, 0.2 ,  44, 0.5, 0, 0, -Math.PI/2, glassMat);
+  createBox( 15, 1, 0.2 ,  36, 0.5, 0, 0, -Math.PI/2, glassMat);
+
+  // Writing man Stand
+  createBox(3, 2, 3,   20, 1, -5);
+  // Glass box
+  createBox(3, 3, 3,   20, 3, -5, 0,0, glassMat);
+
+
+  // Boat Stand
+  createBox(3, 2, 5,   20, 1, 5);
+  // Glass box
+  createBox(3, 3, 5,   20, 3, 5, 0,0, glassMat);
+
+  // Egypt room wall
+  createBox(25, 10, 1,   30, 5, -15,         0, 0,            wallMat);
+  createBox(41, 4, 1,   30, 8, -15,         0, 0,            wallMat);
+
+  
   // Create Windows -------------------------------------------------------------------
   for (let j = 0; j<=1; j++)
     for (let i = -70; i <= 110; i+=45)
@@ -125,6 +157,7 @@ function createBox(w, h, d, x, y, z, xRot, yRot, Material) {
   wall.rotation.y =yRot;
   wall.rotation.x =xRot;    
   wall.position.copy(new THREE.Vector3(x, y, z));
+  wall.castShadow = true;
   worldScene.add(wall);
   worldObjects.push(wall);
 }
@@ -141,6 +174,7 @@ function createPlane(w, h, xSeg, ySeg, x, y, z, xRot, yRot, Material) {
   plane.position.copy(new THREE.Vector3(x, y, z));
   plane.receiveShadow = true;
   worldScene.add(plane);
+  worldObjects.push(plane);
 }
 
 //--------------------------------- CREATE WINDOWS AND HOLES ------------------------------------//
@@ -184,25 +218,25 @@ function LoadTextures(loadingManager) {
   textureLoader.wrapS = textureLoader.wrapT = THREE.RepeatWrapping;
   
   /****FLOOR****/
-  const floorBaseColor = textureLoader.load("./resources/Textures/wood_0018_8k_v2Pscx/wood_0018_base_color_8k.jpg", function(floorBaseColor){
+  const floorBaseColor = textureLoader.load("./resources/Textures/wood_0018_2k_dNBL2j/wood_0018_base_color_2k.jpg", function(floorBaseColor){
     floorBaseColor.wrapS = floorBaseColor.wrapT = THREE.RepeatWrapping;
     floorBaseColor.offset.set( 0, 0 );
     floorBaseColor.repeat.set( 20, 5 );
   });
   
-  const floorNormalMap = textureLoader.load("./resources/Textures/wood_0018_8k_v2Pscx/wood_0018_normal_8k.jpg", function(floorBaseColor){
+  const floorNormalMap = textureLoader.load("./resources/Textures/wood_0018_2k_dNBL2j/wood_0018_normal_2k.jpg", function(floorBaseColor){
     floorNormalMap.wrapS = floorBaseColor.wrapT = THREE.RepeatWrapping;
     floorNormalMap.offset.set( 0, 0 );
     floorNormalMap.repeat.set( 20, 5 );
   });
   
-  const floorRoughnessMap = textureLoader.load("./resources/Textures/wood_0018_8k_v2Pscx/wood_0018_roughness_8k.jpg", function(floorBaseColor){
+  const floorRoughnessMap = textureLoader.load("./resources/Textures/wood_0018_2k_dNBL2j/wood_0018_roughness_2k.jpg", function(floorBaseColor){
     floorRoughnessMap.wrapS = floorRoughnessMap.wrapT = THREE.RepeatWrapping;
     floorRoughnessMap.offset.set( 0, 0 );
     floorRoughnessMap.repeat.set( 20, 5 );
   });
   
-  const floorAmbientOcculsionMap = textureLoader.load("./resources/Textures/wood_0018_8k_v2Pscx/wood_0018_ao_8k.jpg", function(floorBaseColor){
+  const floorAmbientOcculsionMap = textureLoader.load("./resources/Textures/wood_0018_2k_dNBL2j/wood_0018_ao_2k.jpg", function(floorBaseColor){
     floorAmbientOcculsionMap.wrapS = floorAmbientOcculsionMap.wrapT = THREE.RepeatWrapping;
     floorAmbientOcculsionMap.offset.set( 0, 0 );
     floorAmbientOcculsionMap.repeat.set( 20, 5 );
@@ -224,9 +258,9 @@ function LoadTextures(loadingManager) {
       aoMap: floorAmbientOcculsionMap,
       metalnessMap: floorMetallicMap,
       metalness: 0.5,
-      emissive: 0xffffff,
-      emissiveIntensity: 0.25,
-      refractionRatio: 1,
+      // emissive: 0xffffff,
+      // emissiveIntensity: 0.25,
+      // refractionRatio: 1,
     });
   
   /****WALL****/
@@ -275,12 +309,27 @@ function LoadTextures(loadingManager) {
   });
   
   // Create hole wireframe material
-  ceilingMat2 = new THREE.MeshStandardMaterial({
+  ceilingMat2 = new THREE.MeshLambertMaterial({
     color: 'black',
     wireframe: true,
     wireframeLinewidth: 5,  //Any value beyond 1 is ignored by WebGL renderer
     wireframeLinejoin: 'round',
     wireframeLinecap: 'round',
+  });
+
+  // Create ceiling material
+  glassMat = new THREE.MeshPhysicalMaterial( {
+    metalness: .9,
+    roughness: .05,
+    envMapIntensity: 0.9,
+    clearcoat: 1,
+    transparent: true,
+    // transmission: .95,
+    opacity: 0.2,
+    reflectivity: 0.2,
+    refractionRatio: 0.985,
+    ior: 0.9,
+    side: THREE.BackSide,
   });
 
 }

@@ -1,10 +1,18 @@
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/DRACOLoader';
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 function addModels(scene, interactive, objects, loadingManager){
     var mesh;
 
     // Instantiate a loader
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+    dracoLoader.preload();
+
     const gltfLoader = new GLTFLoader(loadingManager);
+    gltfLoader.setDRACOLoader(dracoLoader);
+
+    
 
     //-------------------------------------- PAINTINGS --------------------------------------//
     // Load a glTF resource
@@ -100,10 +108,16 @@ function addModels(scene, interactive, objects, loadingManager){
         gltfLoader.load(
             './resources/3Dmodels/window/window/scene.gltf',
             function ( gltf ) {
+
+                // gltf.scene.traverse( function ( node ) {
+                //     if ( node.isMesh) node.castShadow = true;
+                // } );
+
                 mesh = gltf.scene.children[0];
                 mesh.position.set(i, -1, -28.2);
                 mesh.rotation.set(-Math.PI/2, 0, Math.PI/4.3);
                 mesh.scale.set(0.4,0.2,0.2);
+                //mesh.castShadow = true;
                 scene.add( gltf.scene );
                 objects.push(gltf.scene);
             }
@@ -118,10 +132,16 @@ function addModels(scene, interactive, objects, loadingManager){
         gltfLoader.load(
             './resources/3Dmodels/window/window/scene.gltf',
             function ( gltf ) {
+
+                // gltf.scene.traverse( function ( node ) {
+                //     if ( node.isMesh) node.castShadow = true;
+                // } );
+
                 mesh = gltf.scene.children[0];
                 mesh.position.set(i, -1, 31.8);
                 mesh.rotation.set(-Math.PI/2, 0, Math.PI/4.3);
                 mesh.scale.set(0.4,0.2,0.2);
+                //mesh.castShadow = true;
                 scene.add( gltf.scene );
                 objects.push(gltf.scene);
             }
@@ -216,9 +236,61 @@ function addModels(scene, interactive, objects, loadingManager){
             mesh.rotation.set(0, 0, -Math.PI/2);
             mesh.scale.set(10,10,10);
             scene.add(gltf.scene);
+            objects.push(gltf.scene);
         }
     );
  
+    //---------------------- EGYPT ROOM ------------------------//
+    // Coffin
+    gltfLoader.load(
+        './resources/3Dmodels/egypt/coffin1/scene.gltf',
+        function ( gltf ) {
+            mesh = gltf.scene.children[0];
+            mesh.position.set(35, -6, 3);
+            mesh.rotation.set(-Math.PI/2, 0, -Math.PI/2);
+            scene.add(gltf.scene);
+            objects.push(gltf.scene);
+        }
+    );
+    
+    // Wall 
+    gltfLoader.load(
+        './resources/3Dmodels/egypt/wall/scene.gltf',
+        function ( gltf ) {
+            mesh = gltf.scene.children[0];
+            mesh.position.set(27.5, 12, 30);
+            mesh.scale.set(2.3,2.2,2.2);
+            scene.add(gltf.scene);
+            objects.push(gltf.scene);
+        }
+    );
+
+    // Boat
+    gltfLoader.load(
+        './resources/3Dmodels/egypt/boat/scene.gltf',
+        function ( gltf ) {
+            mesh = gltf.scene.children[0];
+            mesh.position.set(23, 0.2, 5);
+            mesh.scale.set(0.3,0.3,0.3);
+            mesh.rotation.set(-Math.PI/2, Math.PI/4, -Math.PI/2);
+            scene.add(gltf.scene);
+            objects.push(gltf.scene);
+        }
+    );
+    
+    // Writing man
+    gltfLoader.load(
+        './resources/3Dmodels/egypt/writing/scene.gltf',
+        function ( gltf ) {
+            mesh = gltf.scene.children[0];
+            mesh.position.set(20, 2.8, -5);
+            mesh.scale.set(0.1,0.1,0.1);
+            mesh.rotation.set(-Math.PI/2, 0,  Math.PI/2);
+            scene.add(gltf.scene);
+            objects.push(gltf.scene);
+        }
+    );
+
     //---------------------- PAINTINGS ------------------------//
     var pearlPaintingGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
     var pearlPaintingMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/pearl.jpg") });
@@ -233,6 +305,9 @@ function addModels(scene, interactive, objects, loadingManager){
     selfPortrait.position.set(-50, 4, 15.5);
     scene.add( selfPortrait );
     interactive.push(selfPortrait);
+
+    
+
 }
 
 export{addModels};
