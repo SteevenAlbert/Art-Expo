@@ -1,10 +1,11 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.124.0/examples/jsm/controls/OrbitControls.js';
 import { PointerLockControls } from "https://threejs.org/examples/jsm/controls/PointerLockControls.js";
 import { PositionalAudioHelper } from "https://threejs.org/examples/jsm/helpers/PositionalAudioHelper.js";
 import { addModels } from './models.js';
 import { addLights, turnLightOn, turnLightOff } from './lights.js';
+import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/DRACOLoader';
+import { FBXLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/FBXLoader.js';
 import { controlAudio } from './audio.js';
 import { checkCollision, processKeyboard } from './movement.js';
 import {createWorld, LoadTextures, drawCrosshair} from './world.js';
@@ -22,15 +23,15 @@ var loadingManager;
 var modal, btn, modalShown=false;
 var audio, audio2, sphere, topMesh, analyser, dataArray, listener, src, positionalAudio; //Audio Variables
 var rectLight1,rectLight2;
+var prevTime = Date.now();
 
 init();
 
 addLights(scene);
 LoadTextures(loadingManager);
-addModels(scene, interactables, objects,loadingManager);
+addModels(scene, interactables, objects, loadingManager);
 addText(scene);
 createWorld(scene, objects, loadingManager);
-
 animate();
 
 
@@ -136,12 +137,33 @@ function init() {
 		loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
 	});
   onWindowResize();
+
+  loadAnimatedModel(scene, loadingManager);
+}
+
+var mixer;
+function loadAnimatedModel(scene, loadingManager){
+  const loader = new FBXLoader(loadingManager);
+  loader.load('./resources/3Dmodels/reception/animated_model/man.fbx', (fbx) => {
+      fbx.scale.set(0.035,0.035,0.035);
+      fbx.position.set(-89,0,1);
+      fbx.rotation.y=-Math.PI/2;
+      fbx.traverse(c => {
+          c.castShadow = true;
+      });
+      const anim = new FBXLoader(loadingManager);
+      anim.load('./resources/3Dmodels/reception/animated_model/Typing.fbx', (anim) => {
+          mixer = new THREE.AnimationMixer(fbx);
+          const idle = mixer.clipAction(anim.animations[0]);
+          idle.play();
+      });
+      scene.add(fbx);
+  });
 }
 
 
-
 //*--------------------------------- UPDATE SCENE ----------------------------------*/
-function animate() {
+function animate(){
   requestAnimationFrame(animate);
 
   if (controls.isLocked === false && modalShown==false) {
@@ -168,6 +190,13 @@ function animate() {
         controls.unlock();
       }
     }
+  }
+  
+   // For animated model animation
+   if(mixer){
+    var time = Date.now();
+    mixer.update((time - prevTime)*0.001);
+    prevTime = time;
   }
 
   /*****AUDIO VISUALIZER ANIMATION******/
@@ -243,6 +272,7 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   //renderer.setPixelRatio(window.devicePixelRatio);
 }
+
 
 window.addEventListener('resize', onWindowResize);
 document.addEventListener('mousedown', onMouseDown, false);

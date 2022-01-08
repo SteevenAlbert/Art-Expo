@@ -1,7 +1,8 @@
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/DRACOLoader';
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-//import { Vector } from './THREE-CSGMesh-master/csg-lib';
+import { FBXLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/FBXLoader.js';
+
 function addModels(scene, interactive, objects, loadingManager){
     var mesh;
 
@@ -165,7 +166,7 @@ function addModels(scene, interactive, objects, loadingManager){
             scene.add( gltf.scene );
         }
     );
-    
+
     // Desk
     gltfLoader.load(
         './resources/3Dmodels/reception/desk/reception_desk_proposal/scene.gltf',
@@ -173,6 +174,33 @@ function addModels(scene, interactive, objects, loadingManager){
             mesh = gltf.scene.children[0];
             mesh.position.set(-90, 0, 0);
             mesh.scale.set(0.003,0.003,0.003);
+            mesh.rotation.z=0.5;
+            scene.add( gltf.scene );
+            objects.push(gltf.scene);
+        }
+    );
+    
+    // PC Screen
+    gltfLoader.load(
+        './resources/3Dmodels/reception/pc/scene.gltf',
+        function ( gltf ) {                            
+            mesh = gltf.scene.children[0];
+            mesh.position.set(-92, 2.3, 0.5);
+            mesh.scale.set(0.5,0.5,0.5);
+            mesh.rotation.z=Math.PI/2;
+            scene.add( gltf.scene );
+            objects.push(gltf.scene);
+        }
+    );
+
+    // Chair
+    gltfLoader.load(
+        './resources/3Dmodels/reception/office_chair/scene.gltf',
+        function ( gltf ) {                            
+            mesh = gltf.scene.children[0];
+            mesh.position.set(-81, 0, 0);
+            mesh.scale.set(3,3,3);
+            mesh.rotation.z=Math.PI/2;
             scene.add( gltf.scene );
             objects.push(gltf.scene);
         }
@@ -468,5 +496,6 @@ function addModels(scene, interactive, objects, loadingManager){
     interactive.push(track3);
 
 }
+
 
 export{addModels};

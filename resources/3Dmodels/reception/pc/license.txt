@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wide Monitor Model 1
+* source:	https://sketchfab.com/3d-models/wide-monitor-model-1-0178dfc498eb4593891a491fa2469ede
+* author:	Naudaff3D (https://sketchfab.com/Naudaff3D)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wide Monitor Model 1" (https://sketchfab.com/3d-models/wide-monitor-model-1-0178dfc498eb4593891a491fa2469ede) by Naudaff3D (https://sketchfab.com/Naudaff3D) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
