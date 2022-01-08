@@ -1,7 +1,9 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js';
+import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/DRACOLoader';
+import { FBXLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/FBXLoader.js';
 import { PointerLockControls } from "https://threejs.org/examples/jsm/controls/PointerLockControls.js";
-import { addModels } from './models.js';
+import { addModels} from './models.js';
 import { addLights } from './lights.js';
 import { loadMainTheme } from './audio.js';
 import { checkCollision, processKeyboard } from './movement.js';
@@ -26,6 +28,7 @@ init();
 LoadTextures(loadingManager);
 addLights(scene);
 addModels(scene, interactables, objects, loadingManager);
+
 addText(scene);
 createWorld(scene, objects, loadingManager);
 
@@ -96,9 +99,34 @@ function init() {
 		loadingScreen.addEventListener( 'transitionend', onTransitionEnd );
 		
 	} );
-  
+  loadAnimatedModel(loadingManager);
 }
 
+   
+// Animated Receptionist
+var mixer;
+function loadAnimatedModel(loadingManager){
+
+    const loader = new FBXLoader(loadingManager);
+
+    loader.load('./resources/3Dmodels/reception/animated_model/man.fbx', (fbx) => {
+        fbx.scale.set(0.035,0.035,0.035);
+        fbx.position.set(-89,0,1);
+        fbx.rotation.y=-Math.PI/2;
+        fbx.traverse(c => {
+            c.castShadow = true;
+        });
+        const anim = new FBXLoader(loadingManager);
+        anim.load('./resources/3Dmodels/reception/animated_model/Typing.fbx', (anim) => {
+            mixer = new THREE.AnimationMixer(fbx);
+            const idle = mixer.clipAction(anim.animations[0]);
+            idle.play();
+        });
+        scene.add(fbx);
+    });
+}
+
+var prevTime = Date.now();
 //*--------------------------------- UPDATE SCENE ----------------------------------*/
 function animate() {
   
@@ -126,6 +154,14 @@ function animate() {
         moveToObject=false;
       }
     }
+  }
+
+  // For animated model animation
+
+  if(mixer){
+    var time = Date.now();
+    mixer.update((time - prevTime)*0.001);
+    prevTime = time;
   }
 
   renderer.render(scene, camera);
