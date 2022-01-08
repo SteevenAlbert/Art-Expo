@@ -1,0 +1,11 @@
+Model Information:
+* title:	Violin
+* source:	https://sketchfab.com/3d-models/violin-a784af0713a643b19ffcf65194bc0fbf
+* author:	Malopolska`s Virtual Museums (https://sketchfab.com/WirtualneMuzeaMalopolski)
+
+Model License:
+* license type:	CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)
+* requirements:	Credit is not mandatory. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Violin" (https://sketchfab.com/3d-models/violin-a784af0713a643b19ffcf65194bc0fbf) by Malopolska`s Virtual Museums (https://sketchfab.com/WirtualneMuzeaMalopolski) licensed under CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)

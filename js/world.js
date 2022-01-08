@@ -2,7 +2,8 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module
 import CSG from './THREE-CSGMesh-master/three-csg.js';
 
 var worldScene, worldObjects;
-let groundMat, wallMat, ceilingMat1, ceilingMat2, glassMat; //Textures
+
+let groundMat, wallMat, ceilingMat1, ceilingMat2, cylinderMat, cylinderMat2, glassMat; //Textures
 
 //-------------------------------- CREATING WORLD --------------------------------//
 function createWorld(scene, objects, loadingManager){
@@ -31,6 +32,7 @@ function createWorld(scene, objects, loadingManager){
   createBox(51, 10, 1,   -55, 5, 16);
   //wall 6
   createBox(32, 10, 1,   -30, 5, 0.5,   0, -Math.PI/2);
+ 
   //wall 7
   createBox(41, 10, 1,   -10, 5, -15);
   //wall 8
@@ -72,13 +74,29 @@ function createWorld(scene, objects, loadingManager){
 
   //glass in Room C
   makeAHole(16,           28, 22, 1,      -10,0,0);
-  createPlane(28, 22,     1, 1,     center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
-  createPlane(28, 22,     3, 3,    center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
+   createPlane(52, 22,     1, 1,     center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
+  createPlane(52, 22,     6, 3,    center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
+
 
   //glass in Room D
   makeAHole(16,           52, 22, 1,      80,0,0);
-  createPlane(52, 22,     1, 1,     center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
-  createPlane(52, 22,     6, 3,    center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
+  //createPlane(28, 22,     1, 1,     center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
+  //createPlane(28, 22,     3, 3,    center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
+
+  //Cylinders in RoomD
+  var geometry = new THREE.CylinderGeometry( 5, 5, 12, 32 );
+  var cylinder = new THREE.Mesh( geometry, cylinderMat );
+  cylinder.position.set(-10,5,0);
+  scene.add( cylinder );
+  cylinder.material.opacity =0.2;
+  worldObjects.push(cylinder);
+
+  var geometry2 = new THREE.CylinderGeometry( 4.9, 4.9, 0.1, 32 );
+  var cylinder2 = new THREE.Mesh( geometry2, cylinderMat2 );
+  cylinder2.position.set(-10,0.03,0);
+
+  scene.add( cylinder2 );
+
 
   //glass in Right Pathaways
   makeAHole(16,           172, 8, 1,      19,0,23);
@@ -168,7 +186,7 @@ function createPlane(w, h, xSeg, ySeg, x, y, z, xRot, yRot, Material) {
   xRot = xRot || 0;
   yRot = yRot || 0;
 
-  var plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(w, h, xSeg, ySeg), Material);
+  var plane = new THREE.Mesh(new THREE.PlaneGeometry(w, h, xSeg, ySeg), Material);
   plane.rotation.x =xRot;
   plane.rotation.y = yRot;
   plane.position.copy(new THREE.Vector3(x, y, z));
@@ -300,14 +318,30 @@ function LoadTextures(loadingManager) {
     color: 0xffffff,
     transmission: 0.8,  
     roughness: 0.1,
-    ior: 1.5,
-    opacity: 1,
-    clearcoat: 1,
+    opacity: 0.3,
+    clearcoat: 0.3,
     clearcoatRoughness: 0,
     side: THREE.DoubleSide,
     reflectivity: 0.5,
   });
   
+
+  cylinderMat = new THREE.MeshPhysicalMaterial( {
+    color: 0xffffff,
+    transmission: 1,  
+    roughness: 0.1,
+    opacity: 1,
+    clearcoat: 1,
+    clearcoatRoughness: 0,
+    side: THREE.BackSide,
+    reflectivity: 0.5,
+  });
+
+  // Create RoomD cylinder material
+  cylinderMat2 = new THREE.MeshLambertMaterial ( {
+    color: 0x000000
+  });
+
   // Create hole wireframe material
   ceilingMat2 = new THREE.MeshLambertMaterial({
     color: 'black',
@@ -355,5 +389,9 @@ function drawCrosshair(camera){
   crosshair.position.z = -0.3;
   camera.add( crosshair );
 }
+
+
+
+
 
 export {createWorld, LoadTextures, drawCrosshair};

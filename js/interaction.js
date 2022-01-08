@@ -9,7 +9,7 @@ function interact(e, raycaster, interactables, camera){
 
   if (intersects.length != 0){
     intersects[0].object.material.color.set(Math.random() * 0xffffff);
-    return intersects[0].point;
+      return intersects[0].object;
   }else
     return null;
 }

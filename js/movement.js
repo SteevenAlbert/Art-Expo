@@ -1,5 +1,7 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 import { turnLightOff, turnLightOn } from './lights.js';
+import { playEgyptianSong, stopEgyptianSong } from './audio.js';
+
 var keyboard = [];
 let  object, player, runFactor;
 
@@ -12,8 +14,8 @@ function checkCollision(objects, camera) {
     object = objects[i];
 
     // Create bounding boxes for the camera and the current object 
-    firstBox = new THREE.Box3().setFromObject(object).expandByScalar(1.05);
-    secondBox = new THREE.Box3().setFromObject(camera).expandByScalar(1.05);
+    firstBox = new THREE.Box3().setFromObject(object).expandByScalar(1);
+    secondBox = new THREE.Box3().setFromObject(camera).expandByScalar(1);
 
     if (firstBox.intersectsBox(secondBox))
       return true;
@@ -95,13 +97,21 @@ function processKeyboard(angle, cameraAndLight, playerAtt, objects) {
   {
     cameraAndLight.children[1].intensity = 1;
     turnLightOff();
+    playEgyptianSong();
   }
-  else
+  else if(cameraAndLight.position.x < 5 && cameraAndLight.position.x >- 27 &&
+          cameraAndLight.position.z < 30 && cameraAndLight.position.z> - 10)
   {
+    
+  }
+  else{
     cameraAndLight.children[1].intensity = 0;
     turnLightOn();
+    stopEgyptianSong();
   }
+ 
 }
+
   
 
 function moveCameraW(camera, angle, factor)
