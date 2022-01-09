@@ -1,6 +1,4 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-import { turnLightOff, turnLightOn } from './lights.js';
-import { playEgyptianSong, stopEgyptianSong } from './audio.js';
 
 var keyboard = [];
 let  object, player, runFactor;
@@ -28,7 +26,7 @@ function checkCollision(objects, camera) {
 function processKeyboard(angle, cameraAndLight, playerAtt, objects) {
   runFactor=1;
   player = playerAtt;
-  if(keyboard[16]){
+  if(keyboard[16]){ //shift key
     runFactor=1.7;
   }
   var collided= false;
@@ -90,26 +88,7 @@ function processKeyboard(angle, cameraAndLight, playerAtt, objects) {
   if(keyboard[39]){ 
     cameraAndLight.rotation.x -= player.turnSpeed;
   }
-
-  // Check if the user is in the Egypt room
-  if (cameraAndLight.position.x < 50 && cameraAndLight.position.x> 12 && 
-    cameraAndLight.position.z < 12 && cameraAndLight.position.z > -18)
-  {
-    cameraAndLight.children[1].intensity = 1;
-    turnLightOff();
-    playEgyptianSong();
-  }
-  else if(cameraAndLight.position.x < 5 && cameraAndLight.position.x >- 27 &&
-          cameraAndLight.position.z < 30 && cameraAndLight.position.z> - 10)
-  {
-    
-  }
-  else{
-    cameraAndLight.children[1].intensity = 0;
-    turnLightOn();
-    stopEgyptianSong();
-  }
- 
+  
 }
 
   
@@ -149,7 +128,8 @@ function keyDown(event) {
 function keyUp(event) {
   keyboard[event.keyCode] = false;
 }
+
 window.addEventListener('keydown', keyDown);
 window.addEventListener('keyup', keyUp);
 
-export {checkCollision, processKeyboard};
+export {processKeyboard}

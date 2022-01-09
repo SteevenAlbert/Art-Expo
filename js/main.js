@@ -1,22 +1,25 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.124.0/examples/jsm/controls/OrbitControls.js';
 import { PointerLockControls } from "https://threejs.org/examples/jsm/controls/PointerLockControls.js";
 import { PositionalAudioHelper } from "https://threejs.org/examples/jsm/helpers/PositionalAudioHelper.js";
 import { addModels } from './models.js';
 import { addLights, turnLightOn, turnLightOff } from './lights.js';
+import { playEgyptianSong, stopEgyptianSong, playProjectionTrack, stopProjectionTrack } from './audio.js';
 import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/DRACOLoader';
 import { FBXLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/FBXLoader.js';
-import { controlAudio } from './audio.js';
-import { checkCollision, processKeyboard } from './movement.js';
-import {createWorld, LoadTextures, drawCrosshair} from './world.js';
+import { interact } from './interaction.js';
+import { processKeyboard } from './movement.js';
+import { cameraOnSpline } from './spline.js';
 import { addText } from './text.js';
-import {interact} from './interaction.js';
+import { controlAudio} from "./audio.js";
 import {drawVisualizer, distortSphere, distortPlane, modulate, avg, max} from './audiovisualizer.js';
+import { createWorld, LoadTextures, drawCrosshair, projection_animation } from './world.js';
 
+
+var scene, camera, renderer, light, cameraAndLight;
 var controls, raycaster;
-var objects = [], interactables = [];
-const player = { height: 2.9, speed: 0.2, turnSpeed: Math.PI * 0.009 };
-var scene, camera, renderer,light, cameraAndLight;
+var objects = [];
+var interactables = [];
+const player = { height: 2.9, speed: 0.5, turnSpeed: Math.PI * 0.009 };
 var moveToObject=false;
 var targetPoint, objectDirection;
 var loadingManager;
@@ -25,12 +28,18 @@ var audio, audio2, sphere, topMesh, analyser, dataArray, listener, src, position
 var rectLight1,rectLight2;
 var prevTime = Date.now();
 
+var mode;
+let clock = new THREE.Clock(); 
+
 init();
 
 addLights(scene);
-LoadTextures(loadingManager);
+
 addModels(scene, interactables, objects, loadingManager);
+
 addText(scene);
+
+LoadTextures(loadingManager);
 createWorld(scene, objects, loadingManager);
 animate();
 
@@ -60,7 +69,7 @@ function init() {
   cameraAndLight.add(light);
   scene.add(cameraAndLight);
   
-  cameraAndLight.position.set(-110, player.height, 0);
+  cameraAndLight.position.set(120, player.height, 0);
   cameraAndLight.children[0].lookAt(new THREE.Vector3(0,player.height,0));
 
   //***Draw Crosshair****//
@@ -68,7 +77,6 @@ function init() {
 
   //*****CONTROLS*****/
   controls = new PointerLockControls(camera, renderer.domElement);
-  //let controls2 = new OrbitControls(camera, renderer.domElement);
 
 
   //******ROOM D - Audio Visualizer********/
@@ -115,9 +123,18 @@ function init() {
   document.getElementById("menu").addEventListener("click",function(e) {
     if(e.target && e.target.nodeName == "LI") {
       if(e.target.id=="1"){
-          menu.style.visibility  = "hidden";
+          mode= '1';
+          menu.style.visibility = "hidden";
           controls.lock();
-      }else
+          clock.start();
+      }
+      else if(e.target.id=="2"){
+        mode= '2';
+        menu.style.visibility = "hidden";
+        controls.lock();
+        clock.start();
+      }
+      else
         alert(e.target.id + " was clicked");
     }
   });
@@ -141,6 +158,7 @@ function init() {
   loadAnimatedModel(scene, loadingManager);
 }
 
+//*--------------------------------- LOAD ANIMATED MODEL ----------------------------------*/
 var mixer;
 function loadAnimatedModel(scene, loadingManager){
   const loader = new FBXLoader(loadingManager);
@@ -165,35 +183,86 @@ function loadAnimatedModel(scene, loadingManager){
 //*--------------------------------- UPDATE SCENE ----------------------------------*/
 function animate(){
   requestAnimationFrame(animate);
+  projection_animation(clock);
 
-  if (controls.isLocked === false && modalShown==false) {
-    menu.style.visibility = "visible";
-  }else{
-    menu.style.visibility = "hidden";
-  }
+  if(mode=='1'){
 
-  var worldDirectionVec = new THREE.Vector3();
-  camera.getWorldDirection(worldDirectionVec);
+    //FOR DEBUGGING SPLINE CURVE PATH
+    //*
+    console.log("camera's x");console.log(cameraAndLight.position.x);
+    console.log("camera's z");console.log(cameraAndLight.position.z);
+    console.log("camera's x look at");console.log(cameraAndLight.lookAt.x);
+    console.log("camera's z look at");console.log(cameraAndLight.lookAt.z);
+    //*/
+
+
+    var worldDirectionVec = new THREE.Vector3();
+    camera.getWorldDirection(worldDirectionVec);
   
-  var angle = Math.atan2(worldDirectionVec.x, worldDirectionVec.z);
-  processKeyboard(angle, cameraAndLight, player, objects);
-  
-  /*******MOVE TO OBJECT ON CLICK*******/
-  if (controls.isLocked === true){
-    if(moveToObject && targetPoint!=null){
-      var positionVec= targetPoint.clone();
-      camera.position.lerp(positionVec,0.1);
-      camera.position.y= player.height;
-      if(Math.ceil(positionVec.x) == Math.ceil(camera.position.x)){
-        moveToObject=false;
-        showPopup();
-        controls.unlock();
+    var angle = Math.atan2(worldDirectionVec.x, worldDirectionVec.z);
+
+    if (controls.isLocked == true){
+
+      processKeyboard(angle, cameraAndLight, player, objects); 
+
+	    /*******MOVE TO OBJECT ON CLICK*******/
+      if(moveToObject && intersectedPoint!=null){
+        var positionVec= targetPoint.clone();
+        camera.position.lerp(newVec,0.1);
+        camera.position.y= player.height;
+    
+        if(Math.ceil(positionVec.x) == Math.ceil(camera.position.x)){
+          moveToObject=false;
+          showPopup();
+          controls.unlock();
+        }
       }
     }
   }
-  
-   // For animated model animation
-   if(mixer){
+  else if(mode=='2'){
+    if(cameraOnSpline(camera, cameraAndLight, clock)!=false && controls.isLocked == true){
+      cameraOnSpline(camera, cameraAndLight, clock); 
+    }
+    else{                                 //&& modalShown==false
+      menu.style.visibility = "visible";  
+      clock.stop();
+      controls.unlock();
+    }
+  }
+
+  /***** TURN LIGHTS OFF WHEN IN CERTAIN ROOMS ******/
+
+  if (cameraAndLight.position.x < 50 && cameraAndLight.position.x> 10 && 
+    cameraAndLight.position.z < 15 && cameraAndLight.position.z > -15)
+  {  // Check if the user is in the Egypt room
+    playEgyptianSong();
+    turnLightOff();
+    cameraAndLight.children[1].intensity = 1;
+  } 
+  else if (cameraAndLight.position.x < 115 && cameraAndLight.position.x> 50 && 
+    cameraAndLight.position.z < 15 && cameraAndLight.position.z > -15)
+  {  // Check if the user is in the Projector room
+    turnLightOff();
+    setTimeout(function(){objects[33].visible = true;}, 2500 );
+    setTimeout(function(){playProjectionTrack();}, 2250 );
+    cameraAndLight.children[1].intensity = 0.25;
+  }
+  else if(cameraAndLight.position.x < 5 && cameraAndLight.position.x >- 27 &&
+      cameraAndLight.position.z < 30 && cameraAndLight.position.z> - 10){
+
+  }
+  else
+  {
+    stopEgyptianSong();
+    stopProjectionTrack();
+    turnLightOn();
+    cameraAndLight.children[1].intensity = 0;
+    objects[33].visible = false;
+  }
+
+
+  /***** ANIMATED MODEL ANIMATION******/
+  if(mixer){
     var time = Date.now();
     mixer.update((time - prevTime)*0.001);
     prevTime = time;
@@ -243,28 +312,17 @@ function onMouseDown(e){
     console.log(objectDirection);
     moveToObject=true;
   }
-
 */
 
 }
 
-/*---------MODAL FUNCTIONS---------*/
+controls.addEventListener( 'lock', function () {
+  menu.style.visibility = "hidden";
+});
 
-function showPopup(){
-  modal.style.visibility = "visible";
-  modalShown=true;
-}
-
-btn.onclick = function () {
-    modal.style.visibility = "hidden";
-    modalShown=false;
-    controls.lock();
-  }
-
-  function onTransitionEnd( event ) {
-    event.target.remove();
-  }
-  
+controls.addEventListener( 'unlock', function () {
+  menu.style.visibility = "visible";
+});
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -272,6 +330,22 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   //renderer.setPixelRatio(window.devicePixelRatio);
 }
+
+/*---------MODAL FUNCTIONS---------*/
+function showPopup() {
+  modal.style.visibility = "visible";
+  modalShown=true;
+}
+
+btn.onclick = function () {
+  modal.style.visibility = "hidden";
+  modalShown=false;
+  controls.lock();
+}
+
+function onTransitionEnd( event ) {
+  event.target.remove();
+}  
 
 
 window.addEventListener('resize', onWindowResize);

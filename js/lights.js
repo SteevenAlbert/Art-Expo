@@ -50,12 +50,16 @@ function addLights(scene) {
   var helper = new RectAreaLightHelper( floorLight3 ); 
   floorLight3.add( helper );
   scene.add( floorLight3 );
+
+  //projector light
+  addSpotlight(80, 5, 15,   80, 5, -15, scene, 2, 30, 1, 0xFFFFFF);
+
 }
   
 // Adding a spotlight from a point to a target point 
-function addSpotlight(x, y, z, targetX, targetY, targetZ, scene, intensity, distance, angle)
+function addSpotlight(x, y, z, targetX, targetY, targetZ, scene, intensity, distance, angle, color)
 {
-  var color =0xF1CD6C, intensity = intensity || 0.7, distance = distance ||10, angle = angle||0.55, penumbra = penumbra ||  0.2; 
+  var color =color || 0xF1CD6C, intensity = intensity || 0.7, distance = distance ||10, angle = angle||0.55, penumbra = penumbra ||  0.2; 
   let spotLight = new THREE.SpotLight(color, intensity, distance, angle, penumbra);
   spotLight.position.set(x, y, z);
   spotLight.target.position.set(targetX, targetY, targetZ);

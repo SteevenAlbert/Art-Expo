@@ -4,6 +4,7 @@ var track1Playing = false;
 var track2Playing = false;
 var track3Playing = false;
 var EgyptianSongPlaying = false;
+var ProjectionTrackPlaying = false;
 var currentSource = "none";
 var audio = new Audio();
 
@@ -93,6 +94,22 @@ function stopEgyptianSong(){
     EgyptianSongPlaying=false;
 }
 
+function playProjectionTrack(){
+    if(currentSource!="ProjectionTrack"){
+        audio.src="./resources/Audio/ProjectionTrack.mp3";   
+        currentSource="ProjectionTrack";
+    }
+    if(ProjectionTrackPlaying==false){
+        audio.play();
+        ProjectionTrackPlaying=true;
+    }
+}
 
 
-export {controlAudio, playEgyptianSong, stopEgyptianSong};
+function stopProjectionTrack(){
+    audio.pause();
+    ProjectionTrackPlaying=false;
+}
+
+
+export {controlAudio, playEgyptianSong, stopEgyptianSong, playProjectionTrack, stopProjectionTrack};

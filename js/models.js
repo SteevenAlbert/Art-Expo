@@ -15,7 +15,7 @@ function addModels(scene, interactive, objects, loadingManager){
     //gltfLoader.setDRACOLoader(dracoLoader);
 
     
-
+/*
     //-------------------------------------- PAINTINGS --------------------------------------//
     // Load a glTF resource
  
@@ -31,7 +31,22 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-  /*  //------------------------ STATUE ------------------------//
+    var selfPortraitGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
+    var selfPortraitMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/self_portrait.jpg") });
+    var selfPortrait = new THREE.Mesh(selfPortraitGeo, selfPortraitMat);
+    selfPortrait.position.set(-50, 4, 15.5);
+    scene.add( selfPortrait );
+    interactive.push(selfPortrait);
+
+    var pearlPaintingGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
+    var pearlPaintingMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/pearl.jpg") });
+    var pearlPainting = new THREE.Mesh( pearlPaintingGeo, pearlPaintingMat );
+    pearlPainting.position.set(-40, 4, 15.5);
+    scene.add( pearlPainting );
+    interactive.push(pearlPainting);
+*/
+/*
+    //-------------------------------------- STATUE --------------------------------------//
     gltfLoader.load(
         './resources/3Dmodels/statues/Marblebust/marble_bust_01_2k.gltf',
         function ( gltf ) {
@@ -43,7 +58,8 @@ function addModels(scene, interactive, objects, loadingManager){
         interactive.push(gltf.scene);
         objects.push(gltf.scene);
         }
-    );*/
+    );
+*/
 
 
     //-------------------------------------- SPOTLIGHTs --------------------------------------//
@@ -129,8 +145,6 @@ function addModels(scene, interactive, objects, loadingManager){
         );
     }
 
-
-
     //ON RIGHT SIDE
     for (let i = -71.5; i<=146.5; i+=45)
     {
@@ -198,7 +212,7 @@ function addModels(scene, interactive, objects, loadingManager){
         './resources/3Dmodels/reception/office_chair/scene.gltf',
         function ( gltf ) {                            
             mesh = gltf.scene.children[0];
-            mesh.position.set(-81, 0, 0);
+            mesh.position.set(-91, 0, 0);
             mesh.scale.set(3,3,3);
             mesh.rotation.z=Math.PI/2;
             scene.add( gltf.scene );
@@ -206,13 +220,12 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-    // Left sofas
-    for (let i = -115; i<=-95; i+=20){
+    // Left sofa
     gltfLoader.load(
         './resources/3Dmodels/reception/sofa/sofa/scene.gltf',
         function ( gltf ) {
             mesh = gltf.scene.children[0];
-            mesh.position.set(i, 1.5, -25);
+            mesh.position.set(-95, 1.5, -25);
             mesh.rotation.set(-Math.PI/2, 0, 0);
             mesh.scale.set(6,6,6);
             scene.add( gltf.scene );
@@ -221,14 +234,12 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-}
-    // Right sofas
-    for (let i = -115; i<=-95; i+=20)
+    // Right sofa
     gltfLoader.load(
         './resources/3Dmodels/reception/sofa/sofa/scene.gltf',
         function ( gltf ) {
             mesh = gltf.scene.children[0];
-            mesh.position.set(i, 1.5, 27);
+            mesh.position.set(-95, 1.5, 27);
             mesh.rotation.set(-Math.PI/2,0, Math.PI);
             mesh.scale.set(6,6,6);
             scene.add( gltf.scene );
@@ -243,7 +254,7 @@ function addModels(scene, interactive, objects, loadingManager){
         './resources/3Dmodels/reception/plant/plant/BROARD_LEAF_SUCCULENT_5K.gltf',
         function ( gltf ) {
             mesh = gltf.scene.children[0];
-            mesh.position.set(i, 0, -25);
+            mesh.position.set(i, 0, -27);
             mesh.scale.set(10,10,10);
             scene.add( gltf.scene );
             objects.push(gltf.scene);
@@ -256,7 +267,7 @@ function addModels(scene, interactive, objects, loadingManager){
         './resources/3Dmodels/reception/plant/plant/BROARD_LEAF_SUCCULENT_5K.gltf',
         function ( gltf ) {
             mesh = gltf.scene.children[0];
-            mesh.position.set(i, 0, 27);
+            mesh.position.set(i, 0, 29);
             mesh.scale.set(10,10,10);
             scene.add( gltf.scene );
             objects.push(gltf.scene);
@@ -284,6 +295,32 @@ function addModels(scene, interactive, objects, loadingManager){
             mesh.rotation.set(0, 0, -Math.PI/2);
             mesh.scale.set(10,10,10);
             scene.add(gltf.scene);
+            objects.push(gltf.scene);
+        }
+    );
+
+    //left vending Machine
+    gltfLoader.load(
+        './resources/3Dmodels/reception/vending_machine/scene.gltf',
+        function ( gltf ) {
+            mesh = gltf.scene;
+            mesh.position.set(-110, 0, -29);
+            mesh.rotation.set(0,0, 0);
+            mesh.scale.set(0.07,0.07,0.07);
+            scene.add( gltf.scene );
+            objects.push(gltf.scene);
+        }
+    );
+
+    //right vending Machine
+    gltfLoader.load(
+        './resources/3Dmodels/reception/vending_machine/scene.gltf',
+        function ( gltf ) {
+            mesh = gltf.scene;
+            mesh.position.set(-110, 0, 29);
+            mesh.rotation.set(0,Math.PI, 0);
+            mesh.scale.set(0.07,0.07,0.07);
+            scene.add( gltf.scene );                
             objects.push(gltf.scene);
         }
     );
@@ -355,7 +392,8 @@ function addModels(scene, interactive, objects, loadingManager){
     );
 */
      //---------------------- ROOM D ------------------------//
-  /* gltfLoader.load(
+/*      
+        gltfLoader.load(
         './resources/3Dmodels/RoomD/Piano/scene.gltf',
         function ( gltf ) {
             mesh = gltf.scene.children[0];
@@ -377,6 +415,7 @@ function addModels(scene, interactive, objects, loadingManager){
                 objects.push(gltf.scene);
             });
 */
+
         for(let i=3; i<=7;i+=4){
             gltfLoader.load('./resources/3Dmodels/RoomD/AcousticFoam/scene.gltf',
                     function ( gltf ) {
@@ -400,7 +439,6 @@ function addModels(scene, interactive, objects, loadingManager){
                         objects.push(gltf.scene);
                     });
             }  
-    
 
             gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
             function ( gltf ) {
@@ -411,6 +449,7 @@ function addModels(scene, interactive, objects, loadingManager){
                 scene.add(gltf.scene);
                 objects.push(gltf.scene);
             });
+
             gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
             function ( gltf ) {
                 mesh = gltf.scene.children[0];
@@ -451,25 +490,6 @@ function addModels(scene, interactive, objects, loadingManager){
                 scene.add(gltf.scene);
             });
 
-
-
-    
-    //---------------------- PAINTINGS ------------------------//
-    var pearlPaintingGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
-    var pearlPaintingMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/pearl.jpg") });
-    var pearlPainting = new THREE.Mesh( pearlPaintingGeo, pearlPaintingMat );
-    pearlPainting.position.set(-40, 4, 15.5);
-    scene.add( pearlPainting );
-    interactive.push(pearlPainting);
- 
-    var selfPortraitGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
-    var selfPortraitMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/self_portrait.jpg") });
-    var selfPortrait = new THREE.Mesh(selfPortraitGeo, selfPortraitMat);
-    selfPortrait.position.set(-50, 4, 15.5);
-    scene.add( selfPortrait );
-    interactive.push(selfPortrait);
-
-
     //-------------------- ROOM D CANVASES-------------------------//
     var track1Geo = new THREE.BoxBufferGeometry(3, 4, 0.2 );
     var track1Mat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/images/mozart.jpg") });
@@ -495,7 +515,19 @@ function addModels(scene, interactive, objects, loadingManager){
     scene.add(track3);
     interactive.push(track3);
 
-}
 
+    //-----------------------------------------------------------------------------------------------
+    //projector
+    gltfLoader.load(
+        './resources/3Dmodels/projector/scene.gltf',
+        function ( gltf ) {
+            var model = gltf.scene;
+            model.position.set(80, 7, 10);
+            model.rotation.set(-Math.PI/10,Math.PI/2, 0);
+            model.scale.set(3,3,3);
+            scene.add( model ); 
+        }
+    );
+}
 
 export{addModels};
