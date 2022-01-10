@@ -59,7 +59,7 @@ function createWorld(scene, objects, loadingManager){
 
   // Ground --------------------------------------------------------------------------
   let center1 = new THREE.Vector3(0, 0, 0);
-  createBox(250, 60, 1, center1.x, center1.y, center1.z, -Math.PI / 2, 0, groundMat);
+  createBox(250, 60, 1, center1.x, center1.y-0.5, center1.z, -Math.PI / 2, 0, groundMat);
 
 
   /******Glass Part in Roof******/ 

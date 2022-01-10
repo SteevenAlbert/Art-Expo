@@ -25,7 +25,7 @@ function addModels(scene, interactive, objects, loadingManager){
         function ( gltf ) {
         mesh = gltf.scene.children[0];
         mesh.position.set(-60, -0.5, -8);
-        mesh.scale.set(0.01,0.01,0.008);
+        mesh.scale.set(0.01,0.01,0.005);
         mesh.rotation.z=-Math.PI/8;
         scene.add( gltf.scene );
         objects.push(gltf.scene);
@@ -34,13 +34,12 @@ function addModels(scene, interactive, objects, loadingManager){
 
     //load map ontop of table
     gltfLoader.load(
-        './resources/3Dmodels/maquette/map/SceneMaquette.glb',
+        './resources/3Dmodels/maquette/map/SceneMaquette.gltf',
         function ( gltf ) {
         mesh = gltf.scene.children[0];
-        mesh.position.set(-60, 3.1, -8);
-        //mesh.scale.set(0.09,0.09,0.09);
-        //mesh.rotation.z=Math.PI/2;
-        //mesh.rotation.y=Math.PI/2;
+        mesh.position.set(-60, 0, -2);
+        //mesh.scale.set(0.4,0.4,0.4);
+        mesh.rotation.set(0, Math.PI/2, 0)
         scene.add( gltf.scene );
         objects.push(gltf.scene);
         }
@@ -355,15 +354,17 @@ function addModels(scene, interactive, objects, loadingManager){
     );
  
     //---------------------- EGYPT ROOM ------------------------//
-    // Coffin
-    gltfLoader.load(
+     // Coffin
+     gltfLoader.load(
         './resources/3Dmodels/egypt/coffin1/scene.gltf',
         function ( gltf ) {
-            mesh = gltf.scene.children[0];
+            var mesh = gltf.scene.children[0];
             mesh.position.set(35, -6, 3);
             mesh.rotation.set(-Math.PI/2, 0, -Math.PI/2);
+            mesh.children[0].children[0].name ="coffin";
             scene.add(gltf.scene);
             objects.push(gltf.scene);
+            interactive.push(gltf.scene);
         }
     );
     
@@ -371,11 +372,13 @@ function addModels(scene, interactive, objects, loadingManager){
     gltfLoader.load(
         './resources/3Dmodels/egypt/wall/scene.gltf',
         function ( gltf ) {
-            mesh = gltf.scene.children[0];
+            var mesh = gltf.scene.children[0];
             mesh.position.set(27.5, 12, 30);
             mesh.scale.set(2.3,2.2,2.2);
+            mesh.children[0].children[0].name ="wall";
             scene.add(gltf.scene);
             objects.push(gltf.scene);
+            interactive.push(gltf.scene);
         }
     );
 
@@ -383,12 +386,14 @@ function addModels(scene, interactive, objects, loadingManager){
     gltfLoader.load(
         './resources/3Dmodels/egypt/boat/scene.gltf',
         function ( gltf ) {
-            mesh = gltf.scene.children[0];
+            var mesh = gltf.scene.children[0];
             mesh.position.set(23, 0.2, 5);
             mesh.scale.set(0.3,0.3,0.3);
             mesh.rotation.set(-Math.PI/2, Math.PI/4, -Math.PI/2);
-            scene.add(gltf.scene);
+            mesh.children[0].children[0].name ="boat";
+            scene.add(mesh);
             objects.push(gltf.scene);
+            interactive.push(mesh);
         }
     );
     
@@ -400,8 +405,10 @@ function addModels(scene, interactive, objects, loadingManager){
             mesh.position.set(20, 2.8, -5);
             mesh.scale.set(0.1,0.1,0.1);
             mesh.rotation.set(-Math.PI/2, 0,  Math.PI/2);
+            mesh.children[0].children[0].children[1].name = "WritingMan";
             scene.add(gltf.scene);
             objects.push(gltf.scene);
+            interactive.push(gltf.scene);
         }
     );
 

@@ -35,8 +35,8 @@ function controlAudio(audio, audio2, trackName){
     if(trackName=="Audio2"){
         turnLightOff();
         if(currentSource!="Audio2"){
-            audio.src="./resources/Audio/audio4.mp3";
-            audio2.src="./resources/Audio/audio4.mp3";
+            audio.src="./resources/Audio/audio2.mp3";
+            audio2.src="./resources/Audio/audio2.mp3";
         }
         if(track2Playing==false){
             audio2.play();
@@ -56,8 +56,8 @@ function controlAudio(audio, audio2, trackName){
     if(trackName=="Audio3"){
         turnLightOff();
         if(currentSource!="Audio3"){
-            audio.src="./resources/Audio/audio2.mp3";
-            audio2.src="./resources/Audio/audio2.mp3";
+            audio.src="./resources/Audio/audio3.mp3";
+            audio2.src="./resources/Audio/audio3.mp3";
         }
         if(track3Playing==false){
             audio.play();

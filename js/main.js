@@ -11,6 +11,7 @@ import { processKeyboard } from './movement.js';
 import { cameraOnSpline } from './spline.js';
 import { addText } from './text.js';
 import { controlAudio} from "./audio.js";
+import { setModalText} from "./modalText.js";
 import {drawVisualizer, distortSphere, distortPlane, modulate, avg, max} from './audiovisualizer.js';
 import { createWorld, LoadTextures, drawCrosshair, projection_animation } from './world.js';
 
@@ -19,11 +20,11 @@ var scene, camera, renderer, light, cameraAndLight;
 var controls, raycaster;
 var objects = [];
 var interactables = [];
-const player = { height: 2.9, speed: 0.5, turnSpeed: Math.PI * 0.009 };
+const player = { height: 2.9, speed: 0.3, turnSpeed: Math.PI * 0.009 };
 var moveToObject=false;
 var targetPoint, objectDirection;
 var loadingManager;
-var modal, btn, modalShown=false;
+var modal, btn, showModal=false;
 var audio, audio2, sphere, topMesh, analyser, dataArray, listener, src, positionalAudio; //Audio Variables
 var rectLight1,rectLight2;
 var prevTime = Date.now();
@@ -69,7 +70,7 @@ function init() {
   cameraAndLight.add(light);
   scene.add(cameraAndLight);
   
-  cameraAndLight.position.set(120, player.height, 0);
+  cameraAndLight.position.set(-115, player.height, 0);
   cameraAndLight.children[0].lookAt(new THREE.Vector3(0,player.height,0));
 
   //***Draw Crosshair****//
@@ -188,12 +189,12 @@ function animate(){
   if(mode=='1'){
 
     //FOR DEBUGGING SPLINE CURVE PATH
-    //*
+    /*
     console.log("camera's x");console.log(cameraAndLight.position.x);
     console.log("camera's z");console.log(cameraAndLight.position.z);
     console.log("camera's x look at");console.log(cameraAndLight.lookAt.x);
     console.log("camera's z look at");console.log(cameraAndLight.lookAt.z);
-    //*/
+    */
 
 
     var worldDirectionVec = new THREE.Vector3();
@@ -205,21 +206,23 @@ function animate(){
 
       processKeyboard(angle, cameraAndLight, player, objects); 
 
+      /******SHOW MODAL POPUP*******/
+      if(showModal==true){
+        showPopup();
+        controls.unlock();
+      }
 	    /*******MOVE TO OBJECT ON CLICK*******/
-      if(moveToObject && intersectedPoint!=null){
+      /*if(moveToObject && intersectedPoint!=null){
         var positionVec= targetPoint.clone();
         camera.position.lerp(newVec,0.1);
         camera.position.y= player.height;
     
         if(Math.ceil(positionVec.x) == Math.ceil(camera.position.x)){
           moveToObject=false;
-          showPopup();
-          controls.unlock();
         }
-      }
+      }*/
     }
-  }
-  else if(mode=='2'){
+  }else if(mode=='2'){
     if(cameraOnSpline(camera, cameraAndLight, clock)!=false && controls.isLocked == true){
       cameraOnSpline(camera, cameraAndLight, clock); 
     }
@@ -231,7 +234,6 @@ function animate(){
   }
 
   /***** TURN LIGHTS OFF WHEN IN CERTAIN ROOMS ******/
-
   if (cameraAndLight.position.x < 50 && cameraAndLight.position.x> 10 && 
     cameraAndLight.position.z < 15 && cameraAndLight.position.z > -15)
   {  // Check if the user is in the Egypt room
@@ -248,7 +250,7 @@ function animate(){
     cameraAndLight.children[1].intensity = 0.25;
   }
   else if(cameraAndLight.position.x < 5 && cameraAndLight.position.x >- 27 &&
-      cameraAndLight.position.z < 30 && cameraAndLight.position.z> - 10){
+      cameraAndLight.position.z < 30 && cameraAndLight.position.z> - 15){
 
   }
   else
@@ -292,28 +294,24 @@ function animate(){
 
 /*--------------------------------- Input Functions --------------------------------*/
 function onMouseDown(e){
-  if(modalShown==true){return};
+  if(showModal==true){return};
 
   var playerPosition = controls.getObject().position;
   var clickedObj = interact(e, raycaster, interactables, camera);
-
-
-  if (clickedObj != null)
-  {
-  controlAudio(audio, audio2, clickedObj.name);
+  console.log(clickedObj);
+  if(clickedObj!=null){
+    if (clickedObj.name == "Audio1" || clickedObj.name == "Audio2" || clickedObj.name == "Audio3")
+    {
+      controlAudio(audio, audio2, clickedObj.name);
+    }else{
+      showModal = setModalText(clickedObj.name, showModal);
+      /*
+      targetPoint = viewPosition[intersectedObjectID];
+      objectDirection = targetPoint.clone().sub(playerPosition).normalize();
+      console.log(objectDirection);
+      moveToObject=true;*/
+    }
   }
-
-
-/*
-  if (clickedObj != null)
-  {
-    targetPoint = viewPosition[intersectedObjectID];
-    objectDirection = targetPoint.clone().sub(playerPosition).normalize();
-    console.log(objectDirection);
-    moveToObject=true;
-  }
-*/
-
 }
 
 controls.addEventListener( 'lock', function () {
@@ -321,7 +319,9 @@ controls.addEventListener( 'lock', function () {
 });
 
 controls.addEventListener( 'unlock', function () {
-  menu.style.visibility = "visible";
+  if(showModal==false){
+    menu.style.visibility = "visible";
+  }
 });
 
 function onWindowResize() {
@@ -334,12 +334,11 @@ function onWindowResize() {
 /*---------MODAL FUNCTIONS---------*/
 function showPopup() {
   modal.style.visibility = "visible";
-  modalShown=true;
 }
 
 btn.onclick = function () {
   modal.style.visibility = "hidden";
-  modalShown=false;
+  showModal=false;
   controls.lock();
 }
 
