@@ -89,20 +89,71 @@ body {perspective: 800px; margin: 0;overflow: hidden;}
 transform: translateX(200px) translateY(250px) rotateY(20deg) rotateZ(-2deg) rotateX(-15deg);;
 left: 200px; position: absolute; width: 500px;}
 
-#menu ul {list-style: none; padding: 0; margin: 0; position: relative; top:10px;}
-
-#menu li {overflow: hidden;
-text-transform: uppercase; padding-bottom: 4px;
-font-size: 56px;
-color: #fff;
-text-shadow: 1px 1px 1px #000;
-line-height: 60px;
-transition: 0.5s;
-padding-left:0px; padding-right: 0px;
-display: inline-block; position: relative;
+#menu ul {
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    position: relative; 
+    top:10px;
 }
 
-#menu li:hover {background: #e0931f; cursor: pointer;  padding-left:20px; padding-right: 50px; color: #482800;}
+#menu li {
+    overflow: hidden;
+    text-transform: uppercase; 
+    padding-bottom: 4px;
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    line-height: 60px;
+    transition: 0.5s;
+    padding-left:0px; 
+    padding-right: 0px;
+    display: inline-block;
+    position: relative;
+}
+
+#menu li:hover {
+    background: #e0931f; 
+    cursor: pointer;  
+    padding-left:20px; 
+    padding-right: 50px; 
+    color: #482800;
+}
+
+#credits {
+    transform: translateX(200px) translateY(250px) rotateY(20deg) rotateZ(-2deg) rotateX(-15deg);
+    left: 200px; 
+    position: absolute;
+    width: 500px;
+}
+    
+#credits ul {
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    position: relative; 
+    top:10px;
+}
+
+#credits li {
+    overflow: hidden;
+    text-transform: uppercase; padding-bottom: 4px;
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    line-height: 60px;
+    transition: 0.5s;
+    display: inline-block; 
+    position: relative;
+}
+
+#credits li:hover {
+    background: #e0931f; 
+    cursor: pointer;  
+    padding-left:10px; 
+    padding-right: 50px;
+     color: #482800;
+    }
 
 
 h1 {
@@ -122,4 +173,18 @@ border-left: 2px solid #5e5453;
 border-right: 2px solid #5e5453;
 background: rgba(0,0,0,0.8);
 }
+
+#credits h2 {
+    position: absolute;
+    transform-origin: 0% 0%;
+    text-transform: uppercase;
+    color: #fff;
+    width: 800px;
+    padding: 5px 20px;
+    font-size: 40px;
+    top: -100px;
+    left: -100px;
+    font-weight: normal;
+   
+    }
 

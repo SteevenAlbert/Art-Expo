@@ -20,7 +20,7 @@ var scene, camera, renderer, light, cameraAndLight;
 var controls, raycaster;
 var objects = [];
 var interactables = [];
-const player = { height: 2.9, speed: 0.5, turnSpeed: Math.PI * 0.009 };
+const player = { height: 2.9, speed: 0.3, turnSpeed: Math.PI * 0.009 };
 var moveToObject=false;
 var targetPoint, objectDirection;
 var loadingManager;
@@ -35,9 +35,7 @@ let clock = new THREE.Clock();
 init();
 
 addLights(scene);
-
 addModels(scene, interactables, objects, loadingManager);
-
 addText(scene);
 
 LoadTextures(loadingManager);
@@ -121,22 +119,33 @@ function init() {
   
   //*****MENU*****/
   var menu = document.getElementById("menu");
+  var credits = document.getElementById("credits");
+  credits.style.visibility="hidden";
   document.getElementById("menu").addEventListener("click",function(e) {
     if(e.target && e.target.nodeName == "LI") {
-      if(e.target.id=="1"){
+      if(e.target.id=="1"){  //Walkthrough
           mode= '1';
           menu.style.visibility = "hidden";
           controls.lock();
           clock.start();
       }
-      else if(e.target.id=="2"){
+      else if(e.target.id=="2"){ // Automated Tour
         mode= '2';
         menu.style.visibility = "hidden";
         controls.lock();
         clock.start();
+      } else if(e.target.id=="3"){ //Show Credits
+        menu.style.visibility = "hidden";
+        credits.style.visibility = "visible";
+        credits.addEventListener("click",function(event){
+          if(event.target && e.target.nodeName=="LI"){
+            if(event.target.id=="0"){
+              credits.style.visibility="hidden";
+              menu.style.visibility="visible";
+            }
+          }
+        });
       }
-      else
-        alert(e.target.id + " was clicked");
     }
   });
 

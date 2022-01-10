@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 
 const player_height = 2.7;
-const tour_time = 40;	//in seconds to match clock's elapsed time
+const tour_time = 60;	//in seconds to match clock's elapsed time
 var time, curr_time, player_pos, lookAt_pos;
 
 const player_path = new THREE.CatmullRomCurve3( [
