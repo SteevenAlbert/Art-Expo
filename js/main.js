@@ -89,19 +89,20 @@ function init() {
   //Initialize Audio Analyser from Audio1 (used only for visualization)
   audio = new Audio();
   var context = new AudioContext();
-  var gainNode = context.createGain();
   src = context.createMediaElementSource(audio); //Get Audio Context
   analyser = context.createAnalyser(); //Create Analyser object from the context
   src.connect(analyser); // connect the analyser to the audio src
+  var gainNode = context.createGain();
   analyser.connect(gainNode);
   gainNode.connect(context.destination);
-  gainNode.gain.setValueAtTime(0, context.currentTime);
+  gainNode.gain.setValueAtTime(1, context.currentTime);
   analyser.fftSize = 512; //Set Fast Fourier Transform Size
   var bufferLength = analyser.frequencyBinCount;
   dataArray = new Uint8Array(bufferLength); // Uint8Array should be the same length as the frequencyBinCount
   listener = new THREE.AudioListener();
   camera.add( listener );
 
+/*
   //Initialize PositionalAudio from Audio2
   audio2 = new Audio();
   positionalAudio = new THREE.PositionalAudio( listener );
@@ -111,7 +112,7 @@ function init() {
   sphere.add( positionalAudio);
   //var helper = new PositionalAudioHelper( positionalAudio, 30 );
   //positionalAudio.add( helper );
-
+*/
 
   //******RAYCASTER*****/
   raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, - 1, 0), 0, 40);
@@ -300,7 +301,7 @@ function onMouseDown(e){
   if(clickedObj!=null){
     if (clickedObj.name == "Audio1" || clickedObj.name == "Audio2" || clickedObj.name == "Audio3")
     {
-      controlAudio(audio, audio2, clickedObj.name);
+      controlAudio(audio, clickedObj.name);
     }else{
       showModal = setModalText(clickedObj.name, showModal);
     }

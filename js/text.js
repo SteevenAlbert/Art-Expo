@@ -22,7 +22,7 @@ function addText(scene)
             ])
 
             mesh.castShadow = true
-            mesh.position.x = -31.5
+            mesh.position.x = -30.5
             mesh.position.y = 7
             mesh.position.z = -8
             mesh.rotation.y = - Math.PI/2
@@ -48,7 +48,7 @@ function addText(scene)
             ])
 
             mesh.castShadow = true
-            mesh.position.x = -31.5
+            mesh.position.x = -30.5
             mesh.position.y = 6
             mesh.position.z = -8
             mesh.rotation.y = - Math.PI/2
