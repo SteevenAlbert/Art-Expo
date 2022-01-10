@@ -131,7 +131,6 @@ function createWorld(scene, objects, loadingManager){
 
 //Shader Projection Walls
 createBox(30, 10, 0.1,   79, 5, -14.5,    0, 0,     shaderMat);
-//console.log(objects.length);  //-> would be worldObjects[41] with plane collission, [33] without
 
 createBox(53, 6, 1,   83.5, 3, 16,         0, 0,            wallMat);
 createBox(60, 4, 1,   80, 8, 16,         0, 0,            wallMat);

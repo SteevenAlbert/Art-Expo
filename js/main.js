@@ -193,18 +193,14 @@ function loadAnimatedModel(scene, loadingManager){
 //*--------------------------------- UPDATE SCENE ----------------------------------*/
 function animate(){
   requestAnimationFrame(animate);
+  
+  /***** ANIMATED SHADER SCREEN ******/
+  //always animated, but mesh is invisible unless room is entered
   projection_animation(clock);
 
+
+  //------------------------------ WALKKTHROUGH MODE ------------------------------//
   if(mode=='1'){
-
-    //FOR DEBUGGING SPLINE CURVE PATH
-    /*
-    console.log("camera's x");console.log(cameraAndLight.position.x);
-    console.log("camera's z");console.log(cameraAndLight.position.z);
-    console.log("camera's x look at");console.log(cameraAndLight.lookAt.x);
-    console.log("camera's z look at");console.log(cameraAndLight.lookAt.z);
-    */
-
 
     var worldDirectionVec = new THREE.Vector3();
     camera.getWorldDirection(worldDirectionVec);
@@ -220,29 +216,21 @@ function animate(){
         showPopup();
         controls.unlock();
       }
-	    /*******MOVE TO OBJECT ON CLICK*******/
-      /*if(moveToObject && intersectedPoint!=null){
-        var positionVec= targetPoint.clone();
-        camera.position.lerp(newVec,0.1);
-        camera.position.y= player.height;
-    
-        if(Math.ceil(positionVec.x) == Math.ceil(camera.position.x)){
-          moveToObject=false;
-        }
-      }*/
     }
-  }else if(mode=='2'){
-    if(cameraOnSpline(camera, cameraAndLight, clock)!=false &&  menu.style.visibility == "hidden"){
+    
+  }  //------------------------------ AUTOMATED TOUR MODE ------------------------------//
+  else if(mode=='2'){
+    if(cameraOnSpline(camera, cameraAndLight, clock)!=false && menu.style.visibility == "hidden"){
       cameraOnSpline(camera, cameraAndLight, clock); 
     }
-    else{      
-                        //&& modalShown==false
+    else{                                 
       menu.style.visibility = "visible";  
       clock.stop();
       controls.unlock();
     }
   }
 
+    //------------------------------ SHARED; IN BOTH MODES ------------------------------//
   /***** TURN LIGHTS OFF WHEN IN CERTAIN ROOMS ******/
   if (cameraAndLight.position.x < 50 && cameraAndLight.position.x> 10 && 
     cameraAndLight.position.z < 15 && cameraAndLight.position.z > -15)
@@ -251,12 +239,12 @@ function animate(){
     turnLightOff();
     cameraAndLight.children[1].intensity = 1;
   } 
-  else if (cameraAndLight.position.x < 115 && cameraAndLight.position.x> 50 && 
+  else if (cameraAndLight.position.x < 110 && cameraAndLight.position.x> 50 && 
     cameraAndLight.position.z < 15 && cameraAndLight.position.z > -15)
   {  // Check if the user is in the Projector room
     turnLightOff();
-    setTimeout(function(){objects[33].visible = true;}, 2500 );
-    setTimeout(function(){playProjectionTrack();}, 2250 );
+    setTimeout(function(){objects[30].visible = true;}, 2250 ); //waits some time before projecting (as light turns off)
+    setTimeout(function(){playProjectionTrack();}, 2000 );  //we play the track a little earlier because it takes longer to load
     cameraAndLight.children[1].intensity = 0.25;
   }
   else if(cameraAndLight.position.x < 5 && cameraAndLight.position.x >- 27 &&
@@ -269,10 +257,10 @@ function animate(){
     stopProjectionTrack();
     turnLightOn();
     cameraAndLight.children[1].intensity = 0;
-    objects[33].visible = false;
+    objects[30].visible = false;
   }
 
-
+  
   /***** ANIMATED MODEL ANIMATION******/
   if(mixer){
     var time = Date.now();
@@ -297,6 +285,7 @@ function animate(){
     turnLightOff();
   }
   sphere.rotation.y += 0.005;
+
   renderer.render(scene, camera);
 }
 
@@ -314,11 +303,6 @@ function onMouseDown(e){
       controlAudio(audio, audio2, clickedObj.name);
     }else{
       showModal = setModalText(clickedObj.name, showModal);
-      /*
-      targetPoint = viewPosition[intersectedObjectID];
-      objectDirection = targetPoint.clone().sub(playerPosition).normalize();
-      console.log(objectDirection);
-      moveToObject=true;*/
     }
   }
 }
