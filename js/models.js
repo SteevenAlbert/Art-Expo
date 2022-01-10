@@ -14,9 +14,15 @@ function addModels(scene, interactive, objects, loadingManager){
     const gltfLoader = new GLTFLoader(loadingManager);
     //gltfLoader.setDRACOLoader(dracoLoader);
 
+    //---------------------- ROOM A WALL ART ------------------------//
+    var selfPortraitGeo = new THREE.BoxBufferGeometry( 40, 8, 0.2 );
+    var selfPortraitMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/images/cairo_art.png") });
+    var selfPortrait = new THREE.Mesh(selfPortraitGeo, selfPortraitMat);
+    selfPortrait.position.set(-55, 5, 15.5);
+    scene.add( selfPortrait );
     
 
-    //-------------------------------------- PAINTINGS --------------------------------------//
+    //------------------------ ROOM A MAQUETTE ------------------------//
     // Load a glTF resource
 
     //load table for map
@@ -24,11 +30,11 @@ function addModels(scene, interactive, objects, loadingManager){
         './resources/3Dmodels/maquette/table/scene.gltf',
         function ( gltf ) {
         mesh = gltf.scene.children[0];
-        mesh.position.set(-60, -0.5, -8);
-        mesh.scale.set(0.01,0.01,0.005);
-        mesh.rotation.z=-Math.PI/8;
+        mesh.position.set(-60, -1.5, -8);
+        mesh.scale.set(0.018,0.01,0.005);
+        mesh.rotation.z=-Math.PI/12;
         scene.add( gltf.scene );
-        objects.push(gltf.scene);
+        //objects.push(gltf.scene);
         }
     );
 
@@ -37,8 +43,8 @@ function addModels(scene, interactive, objects, loadingManager){
         './resources/3Dmodels/maquette/map/SceneMaquette.gltf',
         function ( gltf ) {
         mesh = gltf.scene.children[0];
-        mesh.position.set(-60, 0, -2);
-        //mesh.scale.set(0.4,0.4,0.4);
+        mesh.position.set(-61, 1, -1.5);
+        mesh.scale.y = 0.3;
         mesh.rotation.set(0, Math.PI/2, 0)
         scene.add( gltf.scene );
         objects.push(gltf.scene);

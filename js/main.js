@@ -20,7 +20,7 @@ var scene, camera, renderer, light, cameraAndLight;
 var controls, raycaster;
 var objects = [];
 var interactables = [];
-const player = { height: 2.9, speed: 0.3, turnSpeed: Math.PI * 0.009 };
+const player = { height: 2.9, speed: 0.5, turnSpeed: Math.PI * 0.009 };
 var moveToObject=false;
 var targetPoint, objectDirection;
 var loadingManager;
