@@ -223,10 +223,11 @@ function animate(){
       }*/
     }
   }else if(mode=='2'){
-    if(cameraOnSpline(camera, cameraAndLight, clock)!=false && controls.isLocked == true){
+    if(cameraOnSpline(camera, cameraAndLight, clock)!=false &&  menu.style.visibility == "hidden"){
       cameraOnSpline(camera, cameraAndLight, clock); 
     }
-    else{                                 //&& modalShown==false
+    else{      
+                        //&& modalShown==false
       menu.style.visibility = "visible";  
       clock.stop();
       controls.unlock();
@@ -298,7 +299,6 @@ function onMouseDown(e){
 
   var playerPosition = controls.getObject().position;
   var clickedObj = interact(e, raycaster, interactables, camera);
-  console.log(clickedObj);
   if(clickedObj!=null){
     if (clickedObj.name == "Audio1" || clickedObj.name == "Audio2" || clickedObj.name == "Audio3")
     {
