@@ -15,10 +15,38 @@ function addModels(scene, interactive, objects, loadingManager){
     //gltfLoader.setDRACOLoader(dracoLoader);
 
     
-/*
+
     //-------------------------------------- PAINTINGS --------------------------------------//
     // Load a glTF resource
- 
+
+    //load table for map
+    gltfLoader.load(
+        './resources/3Dmodels/maquette/table/scene.gltf',
+        function ( gltf ) {
+        mesh = gltf.scene.children[0];
+        mesh.position.set(-60, -0.5, -8);
+        mesh.scale.set(0.01,0.01,0.008);
+        mesh.rotation.z=-Math.PI/8;
+        scene.add( gltf.scene );
+        objects.push(gltf.scene);
+        }
+    );
+
+    //load map ontop of table
+    gltfLoader.load(
+        './resources/3Dmodels/maquette/map/SceneMaquette.glb',
+        function ( gltf ) {
+        mesh = gltf.scene.children[0];
+        mesh.position.set(-60, 3.1, -8);
+        //mesh.scale.set(0.09,0.09,0.09);
+        //mesh.rotation.z=Math.PI/2;
+        //mesh.rotation.y=Math.PI/2;
+        scene.add( gltf.scene );
+        objects.push(gltf.scene);
+        }
+    );
+
+ /*
     gltfLoader.load(
         './resources/3Dmodels/painting/abstractPainting.gltf',
         function ( gltf ) {
@@ -207,18 +235,19 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-    // Chair
-    gltfLoader.load(
+       // Chair
+       gltfLoader.load(
         './resources/3Dmodels/reception/office_chair/scene.gltf',
         function ( gltf ) {                            
             mesh = gltf.scene.children[0];
-            mesh.position.set(-91, 0, 0);
+            mesh.position.set(-90, 0, 1);
             mesh.scale.set(3,3,3);
             mesh.rotation.z=Math.PI/2;
             scene.add( gltf.scene );
             objects.push(gltf.scene);
         }
     );
+
 
     // Left sofa
     gltfLoader.load(
