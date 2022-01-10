@@ -1,3 +1,4 @@
+//--------------------------------- UPDATE TEXT IN THE HTML/CSS POPUP ---------------------------------
 function setModalText(objName){
     var showModal=false;
 

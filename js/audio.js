@@ -8,6 +8,7 @@ var ProjectionTrackPlaying = false;
 var currentSource = "none";
 var audio = new Audio();
 
+//--------------------------- ROOM D AUDIO CONTROL ---------------------------
 function controlAudio(audio, trackName){
     console.log(trackName);
     if(trackName=="Audio1"){
@@ -77,6 +78,7 @@ function controlAudio(audio, trackName){
     }
 }
 
+//--------------------------- PLAY AND PAUSE EGYPTIAN SONG ---------------------------
 function playEgyptianSong(){
     if(currentSource!="EgyptianSong"){
         audio.src="./resources/Audio/EgyptianSong.mp3";   
@@ -94,6 +96,7 @@ function stopEgyptianSong(){
     EgyptianSongPlaying=false;
 }
 
+//--------------------------- PLAY AND PAUSE SHADERS ROOM SONG ---------------------------
 function playProjectionTrack(){
     if(currentSource!="ProjectionTrack"){
         audio.src="./resources/Audio/ProjectionTrack.mp3";   
@@ -104,7 +107,6 @@ function playProjectionTrack(){
         ProjectionTrackPlaying=true;
     }
 }
-
 
 function stopProjectionTrack(){
     audio.pause();

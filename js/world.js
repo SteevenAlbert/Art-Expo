@@ -284,7 +284,7 @@ function LoadTextures(loadingManager) {
     linejoin:  'round'
   });
 
-  //Shaders
+//-------------------------------------- SHADERS --------------------------------------
 
  vertexShader = `
 varying vec2 vUv;
@@ -501,7 +501,7 @@ function projection_animation(clock){
 
 //---------------------------------------------------- CREATE OBJECTS FUNCTIONS -----------------------------------------------------//
 
-//--------------------------- FOR CREATING WALLS ---------------------------//
+//-------------------------------------- FOR CREATING WALLS --------------------------------------
 /* Parameters: Width, Height, Depth, 
                Cartesian-Coordinates[x,y,z], 
                Rotation-Angle-Round-x-Axis, Rotation-Angle-Round-y-Axis, 
@@ -522,7 +522,7 @@ function createBox(w, h, d, x, y, z, xRot, yRot, Material) {
   worldObjects.push(wall);
 }
 
-//--------------------- FOR CREATING GROUND OR CEILING ---------------------//
+//-------------------------------------- FOR CREATING GROUND OR CEILING --------------------------------------
 /* Parameters: ..... */
 function createPlane(w, h, xSeg, ySeg, x, y, z, xRot, yRot, Material) {
   Material = Material || wallMat;
@@ -538,7 +538,7 @@ function createPlane(w, h, xSeg, ySeg, x, y, z, xRot, yRot, Material) {
   //worldObjects.push(plane);
 }
 
-//---------------------- FOR CREATE WINDOWS AND HOLES ----------------------//
+//-------------------------------------- FOR CREATING WINDOWS AND HOLES --------------------------------------
 /* Parameters: Index of mesh in "worldObjects[]" Array, 
                Width, Height, Depth, 
                Cartesian-Coordinates[x,y,z] relative to the origin of geometry cut from */
@@ -574,7 +574,7 @@ function makeAHole(index, width, height, depth, x, y, z) {
   worldScene.add(worldObjects[index]);
 }
 
-//---------------------- FOR CREATING SKYBOX ----------------------//
+//--------------------------------------------------- FOR CREATING SKYBOX ------------------------------------------//
 function createEnvironment(loadingManager)
 {
   // Load the six sides of the skybox 

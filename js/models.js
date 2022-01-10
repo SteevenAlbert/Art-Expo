@@ -466,7 +466,7 @@ for(let i=3; i<=7;i+=4){
     interactive.push(track3);
 
 
-    //-----------------------------------------------------------------------------------------------
+    //-------------------------------- SHADERS ROOM -------------------------------------------
     //projector
     gltfLoader.load(
         './resources/3Dmodels/projector/scene.gltf',

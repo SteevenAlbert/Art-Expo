@@ -2,6 +2,7 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module
 
 let object, intersects;
 
+//----------------------- RETURN THE OBJECT THE USER REACTED WITH -------------------------
 function interact(e, raycaster, interactables, camera){
   var cursor = new THREE.Vector2(0,0);  
   raycaster.setFromCamera(cursor, camera);
@@ -11,7 +12,6 @@ function interact(e, raycaster, interactables, camera){
     if (intersects[0].object.name == "Audio1" || intersects[0].object.name == "Audio2" || intersects[0].object.name == "Audio3"){
       return intersects[0].object;
     }else{
-     // intersects[0].object.material.color.set(Math.random() * 0xffffff);
       return intersects[0].object.parent;
     }
   }else

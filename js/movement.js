@@ -92,7 +92,7 @@ function processKeyboard(angle, cameraAndLight, playerAtt, objects) {
 }
 
   
-
+//-------------------------------- CAMERA MOVEMENT FUNCTIONS --------------------------------
 function moveCameraW(camera, angle, factor)
 {
   factor = factor || 1;

@@ -1,8 +1,10 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 import { RectAreaLightHelper } from './RectAreaLightHelper.js';
 import * as Noise from 'https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.3.0/simplex-noise.min.js'
-var noise = new SimplexNoise();
 
+
+var noise = new SimplexNoise();
+//------------------------ CREATING AUDIO VISUALIZER OBJECT ------------------------ 
 function drawVisualizer(scene, topMesh, sphere, rectLight1, rectLight2){
     var plane2Geometry = new THREE.PlaneGeometry(30, 25, 20, 20);
     var plane2Material = new THREE.MeshPhysicalMaterial( {
@@ -51,7 +53,7 @@ function drawVisualizer(scene, topMesh, sphere, rectLight1, rectLight2){
   }
   
 
-/*-----------Maniuplate Sphere */
+//------------------------------- Maniuplate Sphere ------------------------------------
 function distortSphere(mesh, bassFr, treFr, rectLight1, rectLight2) {
     //Fetch the geometry position array
     var positionAttribute = mesh.geometry.getAttribute( 'position' );
@@ -83,7 +85,6 @@ function distortSphere(mesh, bassFr, treFr, rectLight1, rectLight2) {
         if(displacement>33.5){
             rectLight1.color.setHex( Math.random() * 0xffffff );
             rectLight2.color.setHex( Math.random() * 0xffffff );
-            //mesh.material.emissive.setHex(Math.random() * 0xffffff) ;
         }
     }
     //Set Flags
@@ -94,7 +95,7 @@ function distortSphere(mesh, bassFr, treFr, rectLight1, rectLight2) {
     mesh.geometry.computeFaceNormals();
 }
 
-
+//------------------------ DISTORT CEILING PLANE ------------------------ 
 function distortPlane(mesh, distortionFr, rectLight1,rectLight2) {
     var positionAttribute = mesh.geometry.getAttribute( 'position' );
     var vertex = new THREE.Vector3();
@@ -108,7 +109,6 @@ function distortPlane(mesh, distortionFr, rectLight1,rectLight2) {
         var time = Date.now();
         var distance = (noise.noise2D(vertex.x + time * 0.0003, vertex.y + time * 0.0001) + 0) * distortionFr * amp;
         vertex.z = distance/8;
-        //positionAttribute.setXYZ( vertexIndex, vertex.x, vertex.y, vertex.z );
         positionAttribute.array[vertexIndex] = vertex.x;
         positionAttribute.array[vertexIndex+1] = vertex.y;
         positionAttribute.array[vertexIndex+2] = vertex.z;

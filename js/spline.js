@@ -4,6 +4,7 @@ const player_height = 2.7;
 const tour_time = 200;	//in seconds to match clock's elapsed time
 var time, curr_time, player_pos, lookAt_pos;
 
+//-------------------------------- SET PLAYER PATH FOR SPLINE --------------------------------
 const player_path = new THREE.CatmullRomCurve3( [
 	new THREE.Vector3(-120, player_height, 0),
 	new THREE.Vector3( -110, player_height, 0),
@@ -48,6 +49,7 @@ const player_path = new THREE.CatmullRomCurve3( [
 	new THREE.Vector3( -100, player_height, 0),
 ]);
 
+//-------------------------------- SET LOOKAT PATH FOR SPLINE --------------------------------
 const lookAt_path = new THREE.CatmullRomCurve3( [
 	new THREE.Vector3( -90, 5, 2.5),
 	new THREE.Vector3( -90, 5, 2.5),
@@ -93,6 +95,7 @@ const lookAt_path = new THREE.CatmullRomCurve3( [
 	new THREE.Vector3( -90, 5, 2.5),
 ] );
 
+//--------------- MOVE CAMERA TO A POSITION ON PLAYER AND LOOKAT PATHS -------------------
 function cameraOnSpline(camera, cameraAndLight, clock){
     time = clock.getElapsedTime();
 	

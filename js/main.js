@@ -4,7 +4,6 @@ import { PositionalAudioHelper } from "https://threejs.org/examples/jsm/helpers/
 import { addModels } from './models.js';
 import { addLights, turnLightOn, turnLightOff } from './lights.js';
 import { playEgyptianSong, stopEgyptianSong, playProjectionTrack, stopProjectionTrack } from './audio.js';
-import { DRACOLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/DRACOLoader';
 import { FBXLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/FBXLoader.js';
 import { interact } from './interaction.js';
 import { processKeyboard } from './movement.js';
@@ -21,8 +20,6 @@ var controls, raycaster;
 var objects = [];
 var interactables = [];
 const player = { height: 2.9, speed: 0.3, turnSpeed: Math.PI * 0.009 };
-var moveToObject=false;
-var targetPoint, objectDirection;
 var loadingManager;
 var modal, btn, showModal=false;
 var audio, audio2, sphere, topMesh, analyser, dataArray, listener, src, positionalAudio; //Audio Variables
@@ -51,14 +48,6 @@ function init() {
   scene.fog = new THREE.FogExp2(0x11111f, 0.013);
   camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
   scene.add(camera);
-  
-  //*****RENDERER*****//
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(innerWidth, innerHeight);
-  renderer.shadowMap.enabled = true;
-	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  document.body.appendChild(renderer.domElement);
 
   light = new THREE.PointLight(0xffffff, 0, 20);
   light.castShadow = true;
@@ -70,6 +59,15 @@ function init() {
   
   cameraAndLight.position.set(-115, player.height, 0);
   cameraAndLight.children[0].lookAt(new THREE.Vector3(0,player.height,0));
+  
+  //*****RENDERER*****//
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  document.body.appendChild(renderer.domElement);
+
 
   //***Draw Crosshair****//
   drawCrosshair(camera);

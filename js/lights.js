@@ -6,7 +6,7 @@ var floorLight, floorLight2, floorLight3;
 
 /*Adds Different Types of Light*/
 function addLights(scene) {
-  //------------------------ MAIN LIGHTS ------------------------//
+  //-------------------------------- MAIN LIGHTS -------------------------------//
   hemiLight = new THREE.HemisphereLight(0xFCFBE6, 0xFCFCF7, 0.8);
   scene.add(hemiLight);
 
@@ -14,16 +14,6 @@ function addLights(scene) {
   sunLight2 = addSpotlight(-200, 20, -80, -120, 10, 20, scene, 1, 1000, Math.PI/10);
 
   //------------------------ ROOM LIGHTS AND SPOTLIGHTS ------------------------//
-  /*Reception*/
-/*  var ceilingLight = new THREE.RectAreaLight( 0xFCF9D9, 5,  1, 29 );
-  ceilingLight.position.set(-81, 10, 0 );
-  ceilingLight.lookAt(-81,-10,0);
-  var helper = new RectAreaLightHelper( ceilingLight ); 
-  ceilingLight.add( helper );
-  scene.add( ceilingLight );
-
-*/
-
   /*Egypt Room*/
   addRectAreaLight(40, 0.1,0.1, 8, 15,  40, 10, 0, scene, true, -Math.PI/2,0, 0 );
   addRectAreaLight(20, 2.01, -5,  3, 3,  20, 0, -5, scene, true,  Math.PI/2,0, 0 );
@@ -56,7 +46,7 @@ function addLights(scene) {
 
 }
   
-// Adding a spotlight from a point to a target point 
+//-------------------------------- ADDING A SPOTLIGHT (with target) -------------------------------//
 function addSpotlight(x, y, z, targetX, targetY, targetZ, scene, intensity, distance, angle, color)
 {
   var color =color || 0xF1CD6C, intensity = intensity || 0.7, distance = distance ||10, angle = angle||0.55, penumbra = penumbra ||  0.2; 
@@ -71,6 +61,27 @@ function addSpotlight(x, y, z, targetX, targetY, targetZ, scene, intensity, dist
   return spotLight;
 }
 
+//-------------------------------- ADDING RECTANGLE AREA LIGHT (with helper) -------------------------------//
+function addRectAreaLight(x, y, z, w, h,lookatx, lookaty, lookatz, scene, helper, rotatex, rotatey, rotatez)
+{
+  RectAreaLightUniformsLib.init();
+
+  rotatex = rotatex || 0;
+  rotatey = rotatey || 0;
+  rotatez = rotatez || 0;
+
+  const intensity = 1;
+  var rectLight = new THREE.RectAreaLight( 0xF8F6AF, intensity,  w, h);
+  rectLight.position.set( x, y, z);
+  rectLight.lookAt(lookatx, lookaty, lookatz);
+  rectLight.rotation.set(rotatex, rotatey, rotatez)
+  scene.add( rectLight );
+  
+  if (helper)
+    scene.add( new RectAreaLightHelper( rectLight ) );
+}
+
+//-------------------------------- TURN LIGHTS OFF AND ON -------------------------------//
 function turnLightOff()
 {
    if(hemiLight.intensity>=0.02){
@@ -92,39 +103,6 @@ function turnLightOn()
     floorLight.intensity=0;
     floorLight2.intensity=0;
     floorLight3.intensity=0;
-}
-
-
-// Adding a main spotlight from a point to a target point 
-function addLight(x, y, z, scene)
-{
-  var color =0xFFFFFF, intensity = 4, distance = 10, angle = 0.7, penumbra =  1; 
-  let spotLight = new THREE.SpotLight(color, intensity, distance, angle, penumbra);
-  spotLight.position.set(x, y, z);
-  spotLight.target.position.set(x, 0, z);
-  spotLight.castShadow = true;
-  
-  scene.add(spotLight.target);
-  scene.add( spotLight );
-}
-
-function addRectAreaLight(x, y, z, w, h,lookatx, lookaty, lookatz, scene, helper, rotatex, rotatey, rotatez)
-{
-  RectAreaLightUniformsLib.init();
-
-  rotatex = rotatex || 0;
-  rotatey = rotatey || 0;
-  rotatez = rotatez || 0;
-
-  const intensity = 1;
-  var rectLight = new THREE.RectAreaLight( 0xF8F6AF, intensity,  w, h);
-  rectLight.position.set( x, y, z);
-  rectLight.lookAt(lookatx, lookaty, lookatz);
-  rectLight.rotation.set(rotatex, rotatey, rotatez)
-  scene.add( rectLight );
-  
-  if (helper)
-    scene.add( new RectAreaLightHelper( rectLight ) );
 }
 
 export {addLights, turnLightOff, turnLightOn};
