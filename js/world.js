@@ -68,28 +68,9 @@ function createWorld(scene, objects, loadingManager){
   createPlane(28, 22,     1, 1,     center2.x-51, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
   createPlane(28, 22,     3, 3,    center2.x-51, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
   
-/*
-  //glass in Room B
-  makeAHole(16,           28, 22, 1,      31,0,0);
-  createPlane(28, 22,     1, 1,    center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
-  createPlane(28, 22,     3, 3,    center2.x+31, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
-*/
-
-
-/*
-  //glass in Room C
-  makeAHole(16,           52, 22, 1,      80,0,0);
-
-  createPlane(28, 22,     1, 1,     center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
-  createPlane(28, 22,     3, 3,    center2.x-10, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
-*/
 
   //glass in Room D
   makeAHole(16,           28, 22, 1,      -10,0,0);
-/*
-  createPlane(52, 22,     1, 1,     center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat1);
-  createPlane(52, 22,     6, 3,    center2.x+80, center2.y+0.5, center2.z,     Math.PI/2, 0,      ceilingMat2);
-*/
 
   //Cylinders in RoomD
   var geometry = new THREE.CylinderGeometry( 5, 5, 12, 32 );
@@ -124,11 +105,7 @@ function createWorld(scene, objects, loadingManager){
   createBox( 15, 4, 0.05 ,  44, -2, 0, 0, -Math.PI/2, holeMat);
   createBox( 15, 4, 0.05 ,  36, -2, 0, 0, -Math.PI/2, holeMat);
   // Glass box
-  createPlane(8, 15, 1, 1,  40, 1, 0, -Math.PI / 2, 0,  glassMat);
-  createBox( 8, 1, 0.2 ,   40, 0.5, 7.5, 0, 0, glassMat);
-  createBox( 8, 1, 0.2 ,   40, 0.5, -7.5,0, 0, glassMat);
-  createBox( 15, 1, 0.2 ,  44, 0.5, 0, 0, -Math.PI/2, glassMat);
-  createBox( 15, 1, 0.2 ,  36, 0.5, 0, 0, -Math.PI/2, glassMat);
+  createBox( 8, 5, 15 ,   40, -1, 0, 0, 0, glassMat);
 
   // Writing man Stand
   createBox(3, 2, 3,   20, 1, -5);
@@ -150,12 +127,6 @@ function createWorld(scene, objects, loadingManager){
   for (let j = 0; j<=1; j++)
     for (let i = -70; i <= 110; i+=45){
       makeAHole(j, 12, 6, 1, i, 0, 0);
-      /*
-      if(j==0)
-        createPlane(12, 6,     1, 1,    i, 5, 30.5,     0, 0,      ceilingMat1);
-      else
-      createPlane(12, 6,     1, 1,    i, 5, -30.5,     0, 0,      ceilingMat1);
-      */
     }
 
 //Shader Projection Walls
@@ -220,9 +191,6 @@ function LoadTextures(loadingManager) {
       aoMap: floorAmbientOcculsionMap,
       metalnessMap: floorMetallicMap,
       metalness: 0.5,
-      // emissive: 0xffffff,
-      // emissiveIntensity: 0.25,
-      // refractionRatio: 1,
     });
   
   /****WALL****/

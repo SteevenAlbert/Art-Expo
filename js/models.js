@@ -51,50 +51,6 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
- /*
-    gltfLoader.load(
-        './resources/3Dmodels/painting/abstractPainting.gltf',
-        function ( gltf ) {
-        mesh = gltf.scene.children[0];
-        mesh.position.set(-60, 4, 15.5);
-        mesh.rotation.set(1.5*Math.PI, 0, 0);
-        mesh.scale.set(4,3,4);
-        scene.add( gltf.scene );
-        interactive.push(gltf.scene);
-        }
-    );
-
-    var selfPortraitGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
-    var selfPortraitMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/self_portrait.jpg") });
-    var selfPortrait = new THREE.Mesh(selfPortraitGeo, selfPortraitMat);
-    selfPortrait.position.set(-50, 4, 15.5);
-    scene.add( selfPortrait );
-    interactive.push(selfPortrait);
-
-    var pearlPaintingGeo = new THREE.BoxBufferGeometry( 3.4, 4.6, 0.2 );
-    var pearlPaintingMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("./resources/paintings/pearl.jpg") });
-    var pearlPainting = new THREE.Mesh( pearlPaintingGeo, pearlPaintingMat );
-    pearlPainting.position.set(-40, 4, 15.5);
-    scene.add( pearlPainting );
-    interactive.push(pearlPainting);
-*/
-/*
-    //-------------------------------------- STATUE --------------------------------------//
-    gltfLoader.load(
-        './resources/3Dmodels/statues/Marblebust/marble_bust_01_2k.gltf',
-        function ( gltf ) {
-        mesh = gltf.scene.children[0];
-        mesh.position.set(0, 0, 0);
-        mesh.rotation.set(0, 0, 0);
-        mesh.scale.set(10,10,10);
-        scene.add( gltf.scene );
-        interactive.push(gltf.scene);
-        objects.push(gltf.scene);
-        }
-    );
-*/
-
-
     //-------------------------------------- SPOTLIGHTs --------------------------------------//
     // First room right SPOTLIGHTs
     for (let i = -60; i <= -40; i+=10){
@@ -159,11 +115,6 @@ function addModels(scene, interactive, objects, loadingManager){
         gltfLoader.load(
             './resources/3Dmodels/window/window/scene.gltf',
             function ( gltf ) {
-
-                // gltf.scene.traverse( function ( node ) {
-                //     if ( node.isMesh) node.castShadow = true;
-                // } );
-
                 mesh = gltf.scene.children[0];
                 gltf.castShadow = true;
                 gltf.receiveShadow = true;
@@ -184,11 +135,6 @@ function addModels(scene, interactive, objects, loadingManager){
         gltfLoader.load(
             './resources/3Dmodels/window/window/scene.gltf',
             function ( gltf ) {
-
-                // gltf.scene.traverse( function ( node ) {
-                //     if ( node.isMesh) node.castShadow = true;
-                // } );
-
                 mesh = gltf.scene.children[0];
                 mesh.position.set(i, -1, 31.8);
                 mesh.rotation.set(-Math.PI/2, 0, Math.PI/4.3);
@@ -418,119 +364,81 @@ function addModels(scene, interactive, objects, loadingManager){
         }
     );
 
-/*
-    gltfLoader.load(
-        './resources/3Dmodels/egypt//Ankhu/scene.gltf',
-        function ( gltf ) {
-            mesh = gltf.scene.children[0];
-            mesh.position.set(15, 2, 0);
-            mesh.rotation.set(-Math.PI/2, 0, Math.PI/2);
-            mesh.scale.set(8,10,10);
-            scene.add(gltf.scene);
-            interactive.push(gltf.scene);
-            viewPosition[mesh.id] = new THREE.Vector3(-46,2,-20.5);
-            console.log(mesh.id);
-        }
-    );
-*/
      //---------------------- ROOM D ------------------------//
-/*      
-        gltfLoader.load(
-        './resources/3Dmodels/RoomD/Piano/scene.gltf',
-        function ( gltf ) {
-            mesh = gltf.scene.children[0];
-            mesh.position.set(-26.5, 1.2, 6);
-            mesh.rotation.set(-Math.PI/2, 0, Math.PI/2);
-            mesh.scale.set(0.005,0.005,0.0038);
-            scene.add(gltf.scene);
-            objects.push(gltf.scene);
-        });
 
-        gltfLoader.load(
-            './resources/3Dmodels/RoomD/Violin/scene.gltf',
+for(let i=3; i<=7;i+=4){
+    gltfLoader.load('./resources/3Dmodels/RoomD/AcousticFoam/scene.gltf',
             function ( gltf ) {
                 mesh = gltf.scene.children[0];
-                mesh.position.set(-28.5, 3, -2);
+                mesh.position.set(-4, i, -14.2);
                 mesh.rotation.set(-Math.PI/2, Math.PI/2, Math.PI);
-                mesh.scale.set(8,8,8);
+                mesh.scale.set(10,10,10);
                 scene.add(gltf.scene);
                 objects.push(gltf.scene);
             });
-*/
-
-        for(let i=3; i<=7;i+=4){
-            gltfLoader.load('./resources/3Dmodels/RoomD/AcousticFoam/scene.gltf',
-                    function ( gltf ) {
-                        mesh = gltf.scene.children[0];
-                        mesh.position.set(-4, i, -14.2);
-                        mesh.rotation.set(-Math.PI/2, Math.PI/2, Math.PI);
-                        mesh.scale.set(10,10,10);
-                        scene.add(gltf.scene);
-                        objects.push(gltf.scene);
-                    });
-            }
-             
-        for(let i=3; i<=7;i+=4){
-            gltfLoader.load('./resources/3Dmodels/RoomD/AcousticFoam/scene.gltf',
-                    function ( gltf ) {
-                        mesh = gltf.scene.children[0];
-                        mesh.position.set(-16, i, -14.2);
-                        mesh.rotation.set(-Math.PI/2, Math.PI/2, Math.PI);
-                        mesh.scale.set(10,10,10);
-                        scene.add(gltf.scene);
-                        objects.push(gltf.scene);
-                    });
-            }  
-
-            gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
+    }
+        
+for(let i=3; i<=7;i+=4){
+    gltfLoader.load('./resources/3Dmodels/RoomD/AcousticFoam/scene.gltf',
             function ( gltf ) {
                 mesh = gltf.scene.children[0];
-                mesh.position.set(-26.5, 3.2, 11);
-                mesh.rotation.set(-Math.PI/2, 0, 0);
-                mesh.scale.set(1.5,1.5,1.5);
+                mesh.position.set(-16, i, -14.2);
+                mesh.rotation.set(-Math.PI/2, Math.PI/2, Math.PI);
+                mesh.scale.set(10,10,10);
                 scene.add(gltf.scene);
                 objects.push(gltf.scene);
             });
+    }  
 
-            gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
-            function ( gltf ) {
-                mesh = gltf.scene.children[0];
-                mesh.position.set(-26.5, 3.2, -5);
-                mesh.rotation.set(-Math.PI/2, 0, 0);
-                mesh.scale.set(1.5,1.5,1.5);
-                scene.add(gltf.scene);
-                objects.push(gltf.scene);
-            });
+    gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
+    function ( gltf ) {
+        mesh = gltf.scene.children[0];
+        mesh.position.set(-26.5, 3.2, 11);
+        mesh.rotation.set(-Math.PI/2, 0, 0);
+        mesh.scale.set(1.5,1.5,1.5);
+        scene.add(gltf.scene);
+        objects.push(gltf.scene);
+    });
+
+    gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
+    function ( gltf ) {
+        mesh = gltf.scene.children[0];
+        mesh.position.set(-26.5, 3.2, -5);
+        mesh.rotation.set(-Math.PI/2, 0, 0);
+        mesh.scale.set(1.5,1.5,1.5);
+        scene.add(gltf.scene);
+        objects.push(gltf.scene);
+    });
 
 
-            gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
-            function ( gltf ) {
-                mesh = gltf.scene.children[0];
-                mesh.position.set(6, 3.2, 11);
-                mesh.rotation.set(-Math.PI/2, 0, 0);
-                mesh.scale.set(1.5,1.5,1.5);
-                scene.add(gltf.scene);
-                objects.push(gltf.scene);
-            });
+    gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
+    function ( gltf ) {
+        mesh = gltf.scene.children[0];
+        mesh.position.set(6, 3.2, 11);
+        mesh.rotation.set(-Math.PI/2, 0, 0);
+        mesh.scale.set(1.5,1.5,1.5);
+        scene.add(gltf.scene);
+        objects.push(gltf.scene);
+    });
 
-            gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
-            function ( gltf ) {
-                mesh = gltf.scene.children[0];
-                mesh.position.set(6, 3.2, -5);
-                mesh.rotation.set(-Math.PI/2, 0, 0);
-                mesh.scale.set(1.5,1.5,1.5);
-                scene.add(gltf.scene);
-                objects.push(gltf.scene);
-            });
+    gltfLoader.load('./resources/3Dmodels/RoomD/Ceiling/scene.gltf',
+    function ( gltf ) {
+        mesh = gltf.scene.children[0];
+        mesh.position.set(6, 3.2, -5);
+        mesh.rotation.set(-Math.PI/2, 0, 0);
+        mesh.scale.set(1.5,1.5,1.5);
+        scene.add(gltf.scene);
+        objects.push(gltf.scene);
+    });
 
-            gltfLoader.load('./resources/3Dmodels/RoomD/Speaker/scene.glb',
-            function ( gltf ) {
-                mesh = gltf.scene.children[0];
-                mesh.position.set(-10, -1.5, 0);
-                mesh.rotation.set(Math.PI, 0, Math.PI);
-                mesh.scale.set(2.7,2,2.7);
-                scene.add(gltf.scene);
-            });
+    gltfLoader.load('./resources/3Dmodels/RoomD/Speaker/scene.glb',
+    function ( gltf ) {
+        mesh = gltf.scene.children[0];
+        mesh.position.set(-10, -1.5, 0);
+        mesh.rotation.set(Math.PI, 0, Math.PI);
+        mesh.scale.set(2.7,2,2.7);
+        scene.add(gltf.scene);
+    });
 
     //-------------------- ROOM D CANVASES-------------------------//
     var track1Geo = new THREE.BoxBufferGeometry(3, 4, 0.2 );

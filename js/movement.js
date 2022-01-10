@@ -13,7 +13,7 @@ function checkCollision(objects, camera) {
 
     // Create bounding boxes for the camera and the current object 
     firstBox = new THREE.Box3().setFromObject(object).expandByScalar(1);
-    secondBox = new THREE.Box3().setFromObject(camera).expandByScalar(1);
+    secondBox = new THREE.Box3().setFromObject(camera).expandByScalar(0.6);
 
     if (firstBox.intersectsBox(secondBox))
       return true;
