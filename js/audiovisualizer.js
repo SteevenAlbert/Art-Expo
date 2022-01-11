@@ -73,7 +73,7 @@ function distortSphere(mesh, bassFr, treFr, rectLight1, rectLight2) {
         var rf = 0.0002;
         var displacement = (offset + bassFr ) + noise.noise3D(vertex.x + time *rf*7, vertex.y +  time*rf*8, vertex.z + time*rf*9) * amp * treFr;    
         vertex.multiplyScalar(displacement/8);
-        
+
         //Store the new vertex back into its index in the Attribute Array
         positionAttribute.array[vertexIndex] = vertex.x;
         positionAttribute.array[vertexIndex+1] = vertex.y;
